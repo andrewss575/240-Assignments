@@ -1,0 +1,167 @@
+     1                                 %line 1+1 cinmf.asm
+     2                                 
+     3                                 
+     4                                 
+     5                                 
+     6                                 
+     7                                 
+     8                                 
+     9                                 
+    10                                 
+    11                                 
+    12                                 
+    13                                 
+    14                                 
+    15                                 
+    16                                 
+    17                                 
+    18                                 
+    19                                 
+    20                                 
+    21                                 
+    22                                 
+    23                                 
+    24                                 
+    25                                 
+    26                                 
+    27                                 
+    28                                 
+    29                                 
+    30                                 
+    31                                 
+    32                                 
+    33                                 
+    34                                 
+    35                                 
+    36                                 
+    37                                 
+    38                                 
+    39                                 
+    40                                 
+    41                                 
+    42                                 %line 48+1 cinmf.asm
+    43                                 
+    44                                 %line 56+1 cinmf.asm
+    45                                 
+    46                                 [section .bss]
+    47 00000000 <gap>                  buffer resb 4
+    48 00000004 <gap>                  n resq 1
+    49 0000000C <gap>                  sumN resw 1
+    50                                 
+    51                                 [section .data]
+    52 00000000 496E7075742061206E-    msg1 db "Input a number (100~255): "
+    53 00000000 756D62657220283130-
+    54 00000000 307E323535293A20   
+    55 0000001A 31202B2032202B2033-    msg2 db "1 + 2 + 3 +...+"
+    56 0000001A 202B2E2E2E2B       
+    57 00000029 203D20                 msg3 db " = "
+    58 0000002C 30303030300A           ascii db "00000", 10
+    59                                 
+    60                                 [section .text]
+    61                                 [global _start]
+    62                                 _start:
+    63                                 
+    64                                 
+    65                                 
+    66                                 
+    67                                 
+    68                                 
+    69                                 
+    70                                 
+    71                                 
+    72                                 
+    73                                 
+    74 00000000 48C7C001000000          mov rax, 1
+    75                                 %line 82+0 cinmf.asm
+    76 00000007 48C7C701000000          mov rdi, 1
+    77 0000000E 48C7C6[00000000]        mov rsi, msg1
+    78 00000015 48C7C21A000000          mov rdx, 26
+    79 0000001C 0F05                    syscall
+    80                                 %line 83+1 cinmf.asm
+    81 0000001E 48C7C000000000          mov rax, 0
+    82                                 %line 83+0 cinmf.asm
+    83 00000025 48C7C700000000          mov rdi, 0
+    84 0000002C 48C7C6[00000000]        mov rsi, buffer
+    85 00000033 48C7C204000000          mov rdx, 4
+    86 0000003A 0F05                    syscall
+    87                                 %line 84+1 cinmf.asm
+    88                                 
+    89                                 
+    90 0000003C 48C7C001000000          mov rax, 1
+    91                                 %line 86+0 cinmf.asm
+    92 00000043 48C7C701000000          mov rdi, 1
+    93 0000004A 48C7C6[00000000]        mov rsi, msg2
+    94 00000051 48C7C210000000          mov rdx, 16
+    95 00000058 0F05                    syscall
+    96                                 %line 87+1 cinmf.asm
+    97 0000005A 48C7C001000000          mov rax, 1
+    98                                 %line 87+0 cinmf.asm
+    99 00000061 48C7C701000000          mov rdi, 1
+   100 00000068 48C7C6[00000000]        mov rsi, buffer
+   101 0000006F 48C7C203000000          mov rdx, 3
+   102 00000076 0F05                    syscall
+   103                                 %line 88+1 cinmf.asm
+   104 00000078 48C7C001000000          mov rax, 1
+   105                                 %line 88+0 cinmf.asm
+   106 0000007F 48C7C701000000          mov rdi, 1
+   107 00000086 48C7C6[00000000]        mov rsi, msg3
+   108 0000008D 48C7C203000000          mov rdx, 3
+   109 00000094 0F05                    syscall
+   110                                 %line 89+1 cinmf.asm
+   111                                 
+   112 00000096 66B80000                mov ax, 0
+   113 0000009A 66BB0A00                mov bx, 10
+   114 0000009E 48C7C600000000          mov rsi, 0
+   115                                 next0:
+   116 000000A5 80A6[00000000]0F        and byte[buffer+rsi], 0f
+   117 000000AC 0286[00000000]          add al, byte[buffer+rsi]
+   118 000000B2 80D400                  adc ah, 0
+   119 000000B5 4883FE02                cmp rsi, 2
+   120 000000B9 7401                    je skip0
+   121 000000BB 66F7E3                  mul bx
+   122                                 skip0:
+   123 000000BE 48FFC6                  inc rsi
+   124 000000C1 4883FE03                cmp rsi, 3
+   125 000000C5 7CDC                    jl next0
+   126 000000C7 66890425[00000000]      mov word[n], ax
+   127                                 
+   128                                 
+   129                                 
+   130                                 
+   131 000000CF 66B90000                mov cx, 0
+   132                                 next1:
+   133 000000D3 66010C25[00000000]      add word[sumN], cx
+   134 000000DB 66FFC1                  inc cx
+   135 000000DE 663B0C25[00000000]      cmp cx, word[n]
+   136 000000E6 76E9                    jbe next1
+   137                                 
+   138                                 
+   139                                 
+   140                                 
+   141                                 
+   142 000000E8 48C7C704000000          mov rdi, 4
+   143 000000EF 668B0425[00000000]      mov ax, word[sumN]
+   144                                 next2:
+   145 000000F7 66BA0000                mov dx, 0
+   146 000000FB 66BB0A00                mov bx, 10
+   147 000000FF 66F7F3                  div bx
+   148 00000102 0097[00000000]          add byte[ascii+rdi], dl
+   149 00000108 48FFCF                  dec rdi
+   150 0000010B 4883FF00                cmp rdi, 0
+   151 0000010F 7DE4                    jge next2
+   152                                 
+   153                                 
+   154                                 
+   155 00000111 48C7C001000000          mov rax, 1
+   156                                 %line 133+0 cinmf.asm
+   157 00000118 48C7C701000000          mov rdi, 1
+   158 0000011F 48C7C6[00000000]        mov rsi, ascii
+   159 00000126 48C7C206000000          mov rdx, 6
+   160 0000012D 0F05                    syscall
+   161                                 %line 134+1 cinmf.asm
+   162                                 
+   163                                 
+   164                                 
+   165 0000012F 48C7C03C000000          mov rax, 60
+   166 00000136 48C7C700000000          mov rdi, 0
+   167 0000013D 0F05                    syscall

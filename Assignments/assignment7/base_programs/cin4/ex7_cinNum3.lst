@@ -1,0 +1,114 @@
+     1                                 %line 1+1 ex7_cinNum3.asm
+     2                                 
+     3                                 
+     4                                 
+     5                                 
+     6                                 
+     7                                 
+     8                                 
+     9                                 
+    10                                 
+    11                                 
+    12                                 
+    13                                 
+    14                                 
+    15                                 
+    16                                 
+    17                                 
+    18                                 
+    19                                 
+    20                                 
+    21                                 
+    22                                 
+    23                                 
+    24                                 
+    25                                 
+    26                                 [section .bss]
+    27 00000000 <gap>                   num resb 1
+    28 00000001 <gap>                   buffer resb 2
+    29 00000003 <gap>                   ascii resb 10
+    30                                 
+    31                                 [section .data]
+    32 00000000 496E7075742061206E-     mesg db "Input a number (0~9): "
+    33 00000000 756D6265722028307E-
+    34 00000000 39293A20           
+    35 00000016 20697320616E206576-     even db " is an even number", 10
+    36 00000016 656E206E756D626572-
+    37 00000016 0A                 
+    38 00000029 20697320616E206F64-     odd db " is an odd number", 10
+    39 00000029 64206E756D6265720A 
+    40                                 
+    41                                 [section .text]
+    42                                 [global _start]
+    43                                 _start:
+    44 00000000 49C7C200000000          mov r10, 0
+    45                                 next1:
+    46                                 
+    47 00000007 48C7C001000000          mov rax, 1
+    48 0000000E 48C7C701000000          mov rdi, 1
+    49 00000015 48C7C6[00000000]        mov rsi, mesg
+    50 0000001C 48C7C216000000          mov rdx, 22
+    51 00000023 0F05                    syscall
+    52                                 
+    53                                 
+    54 00000025 48C7C000000000          mov rax, 0
+    55 0000002C 48C7C700000000          mov rdi, 0
+    56 00000033 48C7C6[00000000]        mov rsi, buffer
+    57 0000003A 48C7C202000000          mov rdx, 2
+    58 00000041 0F05                    syscall
+    59                                 
+    60 00000043 408A3425[00000000]      mov sil, byte[buffer]
+    61 0000004B 4188B2[00000000]        mov byte[ascii+r10], sil
+    62 00000052 49FFC2                  inc r10
+    63 00000055 4983FA08                cmp r10, 8
+    64 00000059 76AA                    jbe next1
+    65                                 
+    66 0000005B 49C7C200000000          mov r10, 0
+    67                                 next2:
+    68 00000062 418A82[00000000]        mov al, byte[ascii+r10]
+    69 00000069 240F                    and al, 0f
+    70 0000006B 880425[00000000]        mov byte[num], al
+    71                                 
+    72                                 
+    73 00000072 B400                    mov ah,0
+    74 00000074 8A0425[00000000]        mov al, byte[num]
+    75 0000007B B302                    mov bl, 2
+    76 0000007D F6F3                    div bl
+    77 0000007F 80FC00                  cmp ah, 0
+    78 00000082 753C                    jnz odd_num
+    79                                 
+    80 00000084 48C7C001000000          mov rax, 1
+    81 0000008B 48C7C701000000          mov rdi, 1
+    82 00000092 498DB2[00000000]        lea rsi, byte[ascii+r10]
+    83 00000099 48C7C201000000          mov rdx, 1
+    84 000000A0 0F05                    syscall
+    85                                 
+    86 000000A2 48C7C001000000          mov rax, 1
+    87 000000A9 48C7C701000000          mov rdi, 1
+    88 000000B0 48C7C6[00000000]        mov rsi, even
+    89 000000B7 48C7C213000000          mov rdx, 19
+    90 000000BE 0F05                    syscall
+    91 000000C0 EB3A                    jmp skip
+    92                                 
+    93                                 odd_num:
+    94                                 
+    95 000000C2 48C7C001000000          mov rax, 1
+    96 000000C9 48C7C701000000          mov rdi, 1
+    97 000000D0 498DB2[00000000]        lea rsi, byte[ascii+r10]
+    98 000000D7 48C7C201000000          mov rdx, 1
+    99 000000DE 0F05                    syscall
+   100                                 
+   101 000000E0 48C7C001000000          mov rax, 1
+   102 000000E7 48C7C701000000          mov rdi, 1
+   103 000000EE 48C7C6[00000000]        mov rsi, odd
+   104 000000F5 48C7C212000000          mov rdx, 18
+   105 000000FC 0F05                    syscall
+   106                                 skip:
+   107 000000FE 49FFC2                  inc r10
+   108 00000101 4983FA08                cmp r10, 8
+   109 00000105 0F8651FFFFFF            jbe next2
+   110                                 
+   111                                 done:
+   112 0000010B 48C7C03C000000          mov rax, 60
+   113 00000112 48C7C700000000          mov rdi, 0
+   114 00000119 0F05                    syscall

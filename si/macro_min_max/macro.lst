@@ -1,0 +1,113 @@
+     1                                 %line 1+1 macro.asm
+     2                                 
+     3                                 
+     4                                 
+     5                                 
+     6                                 
+     7                                 
+     8                                 
+     9                                 
+    10                                 
+    11                                 
+    12                                 %line 47+1 macro.asm
+    13                                 
+    14                                 [section .data]
+    15 00000000 040000000500000002-     array1 dd 4, 5, 2, 3, 1, -2
+    16 00000000 000000030000000100-
+    17 00000000 0000FEFFFFFF       
+    18 00000018 020000000600000003-     array2 dd 2, 6, 3, -2, 1, 8, 19
+    19 00000018 000000FEFFFFFF0100-
+    20 00000018 000008000000130000-
+    21 00000018 00                 
+    22                                 
+    23                                 [section .bss]
+    24 00000000 <gap>                   length resd 1
+    25 00000004 <gap>                   min resd 1
+    26 00000008 <gap>                   max resd 1
+    27                                 
+    28                                 [section .text]
+    29                                 [global _start]
+    30                                 
+    31                                 _start:
+    32 00000000 C70425[00000000]06-     mov dword[length], 6
+    33 00000000 000000             
+    34 0000000B 48C7C000000000          mov rax, 0
+    35                                 %line 62+0 macro.asm
+    36 00000012 8B0C25[00000000]        mov ecx, dword[length]
+    37 00000019 BE00000000              mov esi, 0
+    38 0000001E 678B86[00000000]        mov eax, dword[array1 + esi]
+    39 00000025 890425[00000000]        mov dword[max], eax
+    40 0000002C 890425[00000000]        mov dword[min], eax
+    41                                 
+    42                                 ..@4.arr_loop:
+    43 00000033 83C604                  add esi, 4
+    44 00000036 678B86[00000000]        mov eax, dword[array1 + esi]
+    45                                 
+    46                                 
+    47 0000003D 3B0425[00000000]        cmp eax, dword[max]
+    48 00000044 7F16                    jg ..@4.max_found
+    49                                 
+    50                                 
+    51 00000046 3B0425[00000000]        cmp eax, dword[min]
+    52 0000004D 7C02                    jl ..@4.min_found
+    53                                 
+    54                                 
+    55 0000004F E2E0                    loop ..@4.arr_loop
+    56 00000051 EB12                    jmp ..@4.end
+    57                                 
+    58                                 
+    59                                 ..@4.min_found:
+    60 00000053 890425[00000000]        mov dword[min], eax
+    61 0000005A E2D5                    loop ..@4.arr_loop
+    62 0000005C EB07                    jmp ..@4.end
+    63                                 
+    64                                 
+    65                                 ..@4.max_found:
+    66 0000005E 890425[00000000]        mov dword[max], eax
+    67 00000065 E2CA                    loop ..@4.arr_loop
+    68                                 ..@4.end:
+    69                                 %line 63+1 macro.asm
+    70 00000067 C70425[00000000]07-     mov dword[length], 7
+    71 00000067 000000             
+    72 00000072 48C7C000000000          mov rax, 0
+    73                                 %line 64+0 macro.asm
+    74 00000079 8B0C25[00000000]        mov ecx, dword[length]
+    75 00000080 BE00000000              mov esi, 0
+    76 00000085 678B86[00000000]        mov eax, dword[array2 + esi]
+    77 0000008C 890425[00000000]        mov dword[max], eax
+    78 00000093 890425[00000000]        mov dword[min], eax
+    79                                 
+    80                                 ..@5.arr_loop:
+    81 0000009A 83C604                  add esi, 4
+    82 0000009D 678B86[00000000]        mov eax, dword[array2 + esi]
+    83                                 
+    84                                 
+    85 000000A4 3B0425[00000000]        cmp eax, dword[max]
+    86 000000AB 7F16                    jg ..@5.max_found
+    87                                 
+    88                                 
+    89 000000AD 3B0425[00000000]        cmp eax, dword[min]
+    90 000000B4 7C02                    jl ..@5.min_found
+    91                                 
+    92                                 
+    93 000000B6 E2E0                    loop ..@5.arr_loop
+    94 000000B8 EB12                    jmp ..@5.end
+    95                                 
+    96                                 
+    97                                 ..@5.min_found:
+    98 000000BA 890425[00000000]        mov dword[min], eax
+    99 000000C1 E2D5                    loop ..@5.arr_loop
+   100 000000C3 EB07                    jmp ..@5.end
+   101                                 
+   102                                 
+   103                                 ..@5.max_found:
+   104 000000C5 890425[00000000]        mov dword[max], eax
+   105 000000CC E2CA                    loop ..@5.arr_loop
+   106                                 ..@5.end:
+   107                                 %line 65+1 macro.asm
+   108                                 
+   109                                 
+   110                                 end:
+   111 000000CE 48C7C03C000000          mov rax, 60
+   112 000000D5 48C7C700000000          mov rdi, 0
+   113 000000DC 0F05                    syscall

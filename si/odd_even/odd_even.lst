@@ -1,0 +1,27 @@
+     1                                 %line 1+1 odd_even.asm
+     2                                 [section .data]
+     3 00000000 02                      two db 2
+     4 00000001 00                      odd db 0
+     5 00000002 00                      even db 0
+     6 00000003 19                      num db 25
+     7                                 
+     8                                 [section .text]
+     9                                 [global _start]
+    10                                 
+    11                                 _start:
+    12 00000000 8A0425[00000000]        mov al, byte[num]
+    13 00000007 F63425[00000000]        div byte[two]
+    14 0000000E 80FC00                  cmp ah, 0
+    15 00000011 7407                    je is_even
+    16                                 
+    17 00000013 FE0425[00000000]        inc byte[odd]
+    18 0000001A EB05                    jmp end
+    19                                 
+    20                                 is_even:
+    21 0000001C FE0425[00000000]        inc byte[even]
+    22                                 
+    23                                 end:
+    24 00000023 48C7C03C000000          mov rax, 60
+    25 0000002A 48C7C700000000          mov rdi, 0
+    26 00000031 0F05                    syscall
+    27                                 

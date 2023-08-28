@@ -1,0 +1,135 @@
+     1                                 %line 1+1 ex8_cinMacro.asm
+     2                                 
+     3                                 
+     4                                 
+     5                                 
+     6                                 
+     7                                 
+     8                                 
+     9                                 
+    10                                 
+    11                                 
+    12                                 
+    13                                 
+    14                                 
+    15                                 
+    16                                 
+    17                                 
+    18                                 
+    19                                 
+    20                                 
+    21                                 
+    22                                 
+    23                                 
+    24                                 
+    25                                 
+    26                                 
+    27                                 
+    28                                 
+    29                                 
+    30                                 
+    31                                 
+    32                                 
+    33                                 
+    34                                 
+    35                                 %line 41+1 ex8_cinMacro.asm
+    36                                 
+    37                                 %line 49+1 ex8_cinMacro.asm
+    38                                 
+    39                                 [section .bss]
+    40 00000000 <gap>                  buffer resb 4
+    41 00000004 <gap>                  n resw 1
+    42 00000006 <gap>                  sumN resw 1
+    43                                 
+    44                                 [section .data]
+    45 00000000 496E7075742061206E-    msg1 db "Input a number (100~140): "
+    46 00000000 756D62657220283130-
+    47 00000000 307E313430293A20   
+    48 0000001A 31202B2032202B2033-    msg2 db "1 + 2 + 3 +...+ N = "
+    49 0000001A 202B2E2E2E2B204E20-
+    50 0000001A 3D20               
+    51 0000002E 303030300A             ascii db "0000", 10
+    52                                 
+    53                                 [section .text]
+    54                                 [global _start]
+    55                                 _start:
+    56                                 
+    57                                 
+    58                                 
+    59                                 
+    60                                 
+    61                                 
+    62                                 
+    63                                 
+    64                                 
+    65                                 
+    66                                 
+    67 00000000 48C7C001000000          mov rax, 1
+    68                                 %line 74+0 ex8_cinMacro.asm
+    69 00000007 48C7C701000000          mov rdi, 1
+    70 0000000E 48C7C6[00000000]        mov rsi, msg1
+    71 00000015 48C7C21A000000          mov rdx, 26
+    72 0000001C 0F05                    syscall
+    73                                 %line 75+1 ex8_cinMacro.asm
+    74 0000001E 48C7C000000000          mov rax, 0
+    75                                 %line 75+0 ex8_cinMacro.asm
+    76 00000025 48C7C700000000          mov rdi, 0
+    77 0000002C 48C7C6[00000000]        mov rsi, buffer
+    78 00000033 48C7C204000000          mov rdx, 4
+    79 0000003A 0F05                    syscall
+    80                                 %line 76+1 ex8_cinMacro.asm
+    81 0000003C 66B80000                mov ax, 0
+    82 00000040 66BB0A00                mov bx, 10
+    83 00000044 48C7C600000000          mov rsi, 0
+    84                                 next0:
+    85 0000004B 80A6[00000000]0F        and byte[buffer+rsi], 0f
+    86 00000052 0286[00000000]          add al, byte[buffer+rsi]
+    87 00000058 80D400                  adc ah, 0
+    88 0000005B 4883FE02                cmp rsi, 2
+    89 0000005F 7401                    je skip0
+    90 00000061 66F7E3                  mul bx
+    91                                 skip0:
+    92 00000064 48FFC6                  inc rsi
+    93 00000067 4883FE03                cmp rsi, 3
+    94 0000006B 7CDC                    jl next0
+    95 0000006D 66890425[00000000]      mov word[n], ax
+    96                                 
+    97                                 
+    98 00000075 66B90000                mov cx, 0
+    99                                 next1:
+   100 00000079 66010C25[00000000]      add word[sumN], cx
+   101 00000081 66FFC1                  inc cx
+   102 00000084 663B0C25[00000000]      cmp cx, word[n]
+   103 0000008C 76E9                    jbe next1
+   104                                 
+   105                                 
+   106 0000008E 48C7C703000000          mov rdi, 3
+   107 00000095 668B0425[00000000]      mov ax, word[sumN]
+   108                                 next2:
+   109 0000009D 66BA0000                mov dx, 0
+   110 000000A1 66BB0A00                mov bx, 10
+   111 000000A5 66F7F3                  div bx
+   112 000000A8 0097[00000000]          add byte[ascii+rdi], dl
+   113 000000AE 48FFCF                  dec rdi
+   114 000000B1 4883FF00                cmp rdi, 0
+   115 000000B5 7DE4                    jge next2
+   116                                 
+   117                                 
+   118 000000B7 48C7C001000000          mov rax, 1
+   119                                 %line 113+0 ex8_cinMacro.asm
+   120 000000BE 48C7C701000000          mov rdi, 1
+   121 000000C5 48C7C6[00000000]        mov rsi, msg2
+   122 000000CC 48C7C214000000          mov rdx, 20
+   123 000000D3 0F05                    syscall
+   124                                 %line 114+1 ex8_cinMacro.asm
+   125 000000D5 48C7C001000000          mov rax, 1
+   126                                 %line 114+0 ex8_cinMacro.asm
+   127 000000DC 48C7C701000000          mov rdi, 1
+   128 000000E3 48C7C6[00000000]        mov rsi, ascii
+   129 000000EA 48C7C205000000          mov rdx, 5
+   130 000000F1 0F05                    syscall
+   131                                 %line 115+1 ex8_cinMacro.asm
+   132                                 
+   133 000000F3 48C7C03C000000          mov rax, 60
+   134 000000FA 48C7C700000000          mov rdi, 0
+   135 00000101 0F05                    syscall

@@ -1,0 +1,58 @@
+     1                                 %line 1+1 q2.asm
+     2                                 
+     3                                 
+     4                                 
+     5                                 
+     6                                 
+     7                                 
+     8                                 
+     9                                 
+    10                                 
+    11                                 
+    12                                 
+    13                                 
+    14                                 
+    15                                 
+    16                                 
+    17                                 
+    18                                 [section .data]
+    19 00000000 4501FE0123004D0152-     num1 dw 325, 510, 35, 333, 82, 101, 455, 250, 98
+    20 00000000 006500C701FA006200 
+    21                                  bytes
+    22                                 [section .bss]
+    23 00000000 <gap>                   even resw 1
+    24 00000002 <gap>                   odd resw 1
+    25                                 
+    26                                 [section .text]
+    27                                 [global _start]
+    28                                 
+    29                                 _start:
+    30                                 
+    31 00000000 66C70425[00000000]-     mov word[even], 0
+    32 00000000 0000               
+    33 0000000A 66C70425[00000000]-     mov word[odd], 0
+    34 0000000A 0000               
+    35 00000014 48C7C600000000          mov rsi, 0
+    36 0000001B B101                    mov cl, 1
+    37                                 doloop:
+    38 0000001D 668B86[00000000]        mov ax, word[num1 + rsi]
+    39 00000024 B302                    mov bl, 2
+    40 00000026 F6F3                    div bl
+    41 00000028 80FC00                  cmp ah, 0
+    42 0000002B 7508                    jne is_odd
+    43 0000002D 66FF0425[00000000]      inc word[even]
+    44 00000035 EB06                    jmp end_if
+    45                                 
+    46                                 is_odd:
+    47 00000037 66FF0425[00000000]      inc word[odd]
+    48                                 
+    49                                 
+    50                                 end_if:
+    51 0000003F 4883C602                add rsi, 2
+    52 00000043 FEC1                    inc cl
+    53 00000045 80F90A                  cmp cl, 10
+    54 00000048 76D1                    jbe doloop
+    55                                 
+    56 0000004A 48C7C03C000000          mov rax, 60
+    57 00000051 48C7C700000000          mov rdi, 0
+    58 00000058 0F05                    syscall

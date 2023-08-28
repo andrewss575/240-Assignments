@@ -1,0 +1,94 @@
+     1                                 %line 1+1 ex6_addCout1.asm
+     2                                 
+     3                                 
+     4                                 
+     5                                 
+     6                                 
+     7                                 
+     8                                 
+     9                                 
+    10                                 
+    11                                 [section .data]
+    12 00000000 3235                    asc1 db '25'
+    13                                 
+    14 00000002 37                      asc2 db '7'
+    15 00000003 30300A                  asc3 db "00", 10
+    16 00000006 2B                      plus db '+'
+    17 00000007 3D                      equal db '='
+    18                                 
+    19                                 [section .bss]
+    20 00000000 <gap>                   num1 resw 1
+    21 00000002 <gap>                   num2 resb 1
+    22 00000003 <gap>                   sum resw 1
+    23                                 
+    24                                 [section .text]
+    25                                 [global _start]
+    26                                 
+    27                                 _start:
+    28                                 
+    29 00000000 668B0425[00000000]      mov ax, word[asc1]
+    30 00000008 66250F0F                and ax, 0f0f
+    31 0000000C 6689C3                  mov bx, ax
+    32 0000000F B10A                    mov cl, 10
+    33 00000011 F6E1                    mul cl
+    34 00000013 00F8                    add al, bh
+    35                                 
+    36 00000015 66890425[00000000]      mov word[num1], ax
+    37                                 
+    38                                 
+    39 0000001D 8A1C25[00000000]        mov bl, byte[asc2]
+    40 00000024 80E30F                  and bl, 0f
+    41 00000027 881C25[00000000]        mov byte[num2], bl
+    42                                 
+    43                                 
+    44 0000002E 668B0425[00000000]      mov ax, word[num1]
+    45 00000036 020425[00000000]        add al, byte[num2]
+    46 0000003D 80D400                  adc ah, 0
+    47 00000040 66890425[00000000]      mov word[sum], ax
+    48                                 
+    49                                 
+    50 00000048 B400                    mov ah, 0
+    51 0000004A 668B0425[00000000]      mov ax, word[sum]
+    52 00000052 B30A                    mov bl, 10
+    53 00000054 F6F3                    div bl
+    54 00000056 000425[00000000]        add byte[asc3+0], al
+    55 0000005D 002425[01000000]        add byte[asc3+1], ah
+    56                                 
+    57                                 
+    58 00000064 48C7C001000000          mov rax, 1
+    59 0000006B 48C7C701000000          mov rdi, 1
+    60 00000072 48C7C6[00000000]        mov rsi, asc1
+    61 00000079 48C7C202000000          mov rdx, 2
+    62 00000080 0F05                    syscall
+    63                                 
+    64                                 
+    65 00000082 48C7C001000000          mov rax, 1
+    66 00000089 48C7C701000000          mov rdi, 1
+    67 00000090 48C7C6[00000000]        mov rsi, plus
+    68 00000097 48C7C201000000          mov rdx, 1
+    69 0000009E 0F05                    syscall
+    70                                 
+    71                                 
+    72 000000A0 48C7C001000000          mov rax, 1
+    73 000000A7 48C7C701000000          mov rdi, 1
+    74 000000AE 48C7C6[00000000]        mov rsi, asc2
+    75 000000B5 48C7C201000000          mov rdx, 1
+    76 000000BC 0F05                    syscall
+    77                                 
+    78                                 
+    79 000000BE 48C7C001000000          mov rax, 1
+    80 000000C5 48C7C701000000          mov rdi, 1
+    81 000000CC 48C7C6[00000000]        mov rsi, equal
+    82 000000D3 48C7C201000000          mov rdx, 1
+    83 000000DA 0F05                    syscall
+    84                                 
+    85                                 
+    86 000000DC 48C7C001000000          mov rax, 1
+    87 000000E3 48C7C701000000          mov rdi, 1
+    88 000000EA 48C7C6[00000000]        mov rsi, asc3
+    89 000000F1 48C7C203000000          mov rdx, 3
+    90 000000F8 0F05                    syscall
+    91                                 
+    92 000000FA 48C7C03C000000          mov rax, 60
+    93 00000101 48C7C700000000          mov rdi, 0
+    94 00000108 0F05                    syscall

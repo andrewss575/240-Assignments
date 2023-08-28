@@ -1,0 +1,98 @@
+     1                                 %line 1+1 ex7_cinNum2.asm
+     2                                 
+     3                                 
+     4                                 
+     5                                 
+     6                                 
+     7                                 
+     8                                 
+     9                                 
+    10                                 
+    11                                 
+    12                                 
+    13                                 
+    14                                 
+    15                                 
+    16                                 
+    17                                 
+    18                                 
+    19                                 
+    20                                 
+    21                                 [section .bss]
+    22 00000000 <gap>                   num resb 1
+    23 00000001 <gap>                   buffer resb 2
+    24                                 
+    25                                 [section .data]
+    26 00000000 496E7075742061206E-     mesg db "Input a number (0~9): "
+    27 00000000 756D6265722028307E-
+    28 00000000 39293A20           
+    29 00000016 20697320616E206576-     even db " is an even number", 10
+    30 00000016 656E206E756D626572-
+    31 00000016 0A                 
+    32 00000029 20697320616E206F64-     odd db " is an odd number", 10
+    33 00000029 64206E756D6265720A 
+    34                                 
+    35                                 [section .text]
+    36                                 [global _start]
+    37                                 _start:
+    38 00000000 49C7C200000000          mov r10, 0
+    39                                 next:
+    40                                 
+    41 00000007 48C7C001000000          mov rax, 1
+    42 0000000E 48C7C701000000          mov rdi, 1
+    43 00000015 48C7C6[00000000]        mov rsi, mesg
+    44 0000001C 48C7C216000000          mov rdx, 22
+    45 00000023 0F05                    syscall
+    46                                 
+    47                                 
+    48 00000025 48C7C000000000          mov rax, 0
+    49 0000002C 48C7C700000000          mov rdi, 0
+    50 00000033 48C7C6[00000000]        mov rsi, buffer
+    51 0000003A 48C7C202000000          mov rdx, 2
+    52 00000041 0F05                    syscall
+    53 00000043 8A0425[00000000]        mov al, byte[buffer]
+    54 0000004A 240F                    and al, 0f
+    55 0000004C 880425[00000000]        mov byte[num], al
+    56                                 
+    57                                 
+    58 00000053 B400                    mov ah,0
+    59 00000055 8A0425[00000000]        mov al, byte[num]
+    60 0000005C B302                    mov bl, 2
+    61 0000005E F6F3                    div bl
+    62 00000060 80FC00                  cmp ah, 0
+    63 00000063 753C                    jnz odd_num
+    64                                 
+    65 00000065 48C7C001000000          mov rax, 1
+    66 0000006C 48C7C701000000          mov rdi, 1
+    67 00000073 48C7C6[00000000]        mov rsi, buffer
+    68 0000007A 48C7C201000000          mov rdx, 1
+    69 00000081 0F05                    syscall
+    70                                 
+    71 00000083 48C7C001000000          mov rax, 1
+    72 0000008A 48C7C701000000          mov rdi, 1
+    73 00000091 48C7C6[00000000]        mov rsi, even
+    74 00000098 48C7C213000000          mov rdx, 19
+    75 0000009F 0F05                    syscall
+    76 000000A1 EB3A                    jmp skip
+    77                                 
+    78                                 odd_num:
+    79                                 
+    80 000000A3 48C7C001000000          mov rax, 1
+    81 000000AA 48C7C701000000          mov rdi, 1
+    82 000000B1 48C7C6[00000000]        mov rsi, buffer
+    83 000000B8 48C7C201000000          mov rdx, 1
+    84 000000BF 0F05                    syscall
+    85                                 
+    86 000000C1 48C7C001000000          mov rax, 1
+    87 000000C8 48C7C701000000          mov rdi, 1
+    88 000000CF 48C7C6[00000000]        mov rsi, odd
+    89 000000D6 48C7C212000000          mov rdx, 18
+    90 000000DD 0F05                    syscall
+    91                                 skip:
+    92 000000DF 49FFC2                  inc r10
+    93 000000E2 4983FA08                cmp r10, 8
+    94 000000E6 0F8615FFFFFF            jbe next
+    95                                 done:
+    96 000000EC 48C7C03C000000          mov rax, 60
+    97 000000F3 48C7C700000000          mov rdi, 0
+    98 000000FA 0F05                    syscall

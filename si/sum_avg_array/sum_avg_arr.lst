@@ -1,0 +1,35 @@
+     1                                 %line 1+1 sum_avg_arr.asm
+     2                                 [section .data]
+     3                                 
+     4 00000000 00000000                average_q dd 0
+     5 00000004 00000000                average_r dd 0
+     6 00000008 00000000                sum dd 0
+     7 0000000C 020000000300000005-     list dd 2,3,5,7,9,11
+     8 0000000C 000000070000000900-
+     9 0000000C 00000B000000       
+    10                                 
+    11                                 [section .text]
+    12                                 [global _start]
+    13                                 
+    14                                 _start:
+    15 00000000 48C7C3[00000000]        mov rbx, list
+    16 00000007 48C7C600000000          mov rsi, 0
+    17 0000000E 48C7C106000000          mov rcx, 6
+    18 00000015 B800000000              mov eax, 0
+    19                                 
+    20                                 
+    21                                  lp:
+    22 0000001A 0304B3                  add eax, dword[rbx + rsi*4]
+    23 0000001D 48FFC6                  inc rsi
+    24 00000020 E2F6                    loop lp
+    25                                 
+    26 00000022 890425[00000000]        mov dword[sum], eax
+    27 00000029 48F7FE                  idiv rsi
+    28 0000002C 890425[00000000]        mov dword[average_q], eax
+    29 00000033 891425[00000000]        mov dword[average_r], edx
+    30                                 
+    31                                 
+    32                                 
+    33 0000003A 48C7C03C000000          mov rax, 60
+    34 00000041 48C7C700000000          mov rdi, 0
+    35 00000048 0F05                    syscall

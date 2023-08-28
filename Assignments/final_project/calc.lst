@@ -1,0 +1,147 @@
+     1                                 %line 1+1 calc.asm
+     2                                 
+     3                                 
+     4                                 
+     5                                 
+     6                                 %line 12+1 calc.asm
+     7                                 
+     8                                 %line 20+1 calc.asm
+     9                                 
+    10                                 [section .data]
+    11 00000000 456E74657220796F75-     msg1 db "Enter your expression: "
+    12 00000000 722065787072657373-
+    13 00000000 696F6E3A20         
+    14                                 
+    15                                 [section .bss]
+    16 00000000 <gap>                   buffer resb 100
+    17 00000064 <gap>                   num1 resb 1
+    18 00000065 <gap>                   num2 resb 1
+    19 00000066 <gap>                   num3 resb 1
+    20 00000067 <gap>                   num4 resb 1
+    21 00000068 <gap>                   num5 resb 1
+    22 00000069 <gap>                   num6 resb 1
+    23 0000006A <gap>                   num7 resb 1
+    24 0000006B <gap>                   sym1 resb 1
+    25 0000006C <gap>                   sym2 resb 1
+    26 0000006D <gap>                   sym3 resb 1
+    27 0000006E <gap>                   sym4 resb 1
+    28 0000006F <gap>                   sym5 resb 1
+    29 00000070 <gap>                   sym6 resb 1
+    30                                 
+    31                                 [section .text]
+    32                                 [global _start]
+    33                                 
+    34                                 _start:
+    35 00000000 48C7C001000000          mov rax, 1
+    36                                 %line 44+0 calc.asm
+    37 00000007 48C7C701000000          mov rdi, 1
+    38 0000000E 48C7C6[00000000]        mov rsi, msg1
+    39 00000015 48C7C217000000          mov rdx, 23
+    40 0000001C 0F05                    syscall
+    41                                 %line 45+1 calc.asm
+    42 0000001E 48C7C000000000          mov rax, 0
+    43                                 %line 45+0 calc.asm
+    44 00000025 48C7C700000000          mov rdi, 0
+    45 0000002C 48C7C6[00000000]        mov rsi, buffer
+    46 00000033 48C7C20E000000          mov rdx, 14
+    47 0000003A 0F05                    syscall
+    48                                 %line 46+1 calc.asm
+    49                                 
+    50 0000003C 8A0425[00000000]        mov al, byte[buffer + 0]
+    51 00000043 880425[00000000]        mov byte[num1], al
+    52 0000004A 8A0425[01000000]        mov al, byte[buffer + 1]
+    53 00000051 880425[00000000]        mov byte[sym1], al
+    54 00000058 8A0425[02000000]        mov al, byte[buffer + 2]
+    55 0000005F 880425[00000000]        mov byte[num2], al
+    56 00000066 8A0425[03000000]        mov al, byte[buffer + 3]
+    57 0000006D 880425[00000000]        mov byte[sym2], al
+    58 00000074 8A0425[04000000]        mov al, byte[buffer + 4]
+    59 0000007B 880425[00000000]        mov byte[num3], al
+    60 00000082 8A0425[05000000]        mov al, byte[buffer + 5]
+    61 00000089 880425[00000000]        mov byte[sym3], al
+    62 00000090 8A0425[06000000]        mov al, byte[buffer + 6]
+    63 00000097 880425[00000000]        mov byte[num4], al
+    64 0000009E 8A0425[07000000]        mov al, byte[buffer + 7]
+    65 000000A5 880425[00000000]        mov byte[sym4], al
+    66 000000AC 8A0425[08000000]        mov al, byte[buffer + 8]
+    67 000000B3 880425[00000000]        mov byte[num5], al
+    68 000000BA 8A0425[09000000]        mov al, byte[buffer + 9]
+    69 000000C1 880425[00000000]        mov byte[sym5], al
+    70 000000C8 8A0425[0A000000]        mov al, byte[buffer + 10]
+    71 000000CF 880425[00000000]        mov byte[num6], al
+    72 000000D6 8A0425[0B000000]        mov al, byte[buffer + 11]
+    73 000000DD 880425[00000000]        mov byte[sym6], al
+    74 000000E4 8A0425[0C000000]        mov al, byte[buffer + 12]
+    75 000000EB 880425[00000000]        mov byte[num7], al
+    76                                 
+    77 000000F2 48C7C03C000000          mov rax, 60
+    78 000000F9 48C7C700000000          mov rdi, 0
+    79 00000100 0F05                    syscall
+    80                                 
+    81                                 
+    82                                 
+    83                                 
+    84                                 [global addition]
+    85                                 
+    86                                 addition:
+    87                                 
+    88 00000102 4801F7                  add rdi, rsi
+    89 00000105 4889F8                  mov rax, rdi
+    90                                 
+    91 00000108 C3                      ret
+    92                                 
+    93                                 
+    94                                 
+    95                                 [global subtraction]
+    96                                 
+    97                                 subtraction:
+    98                                 
+    99 00000109 4829F7                  sub rdi, rsi
+   100 0000010C 4889F8                  mov rax, rdi
+   101                                 
+   102 0000010F C3                      ret
+   103                                 
+   104                                 
+   105                                 
+   106                                 [global multiplication]
+   107                                 
+   108                                 multiplication:
+   109 00000110 4889F8                  mov rax, rdi
+   110 00000113 48F7EE                  imul rsi
+   111                                 
+   112 00000116 C3                      ret
+   113                                 
+   114                                 
+   115                                 
+   116                                 [global division]
+   117                                 
+   118                                 division:
+   119 00000117 4889F8                  mov rax, rdi
+   120 0000011A F7F6                    div esi
+   121                                 
+   122 0000011C C3                      ret
+   123                                 
+   124                                 
+   125                                 
+   126                                 [global modulo]
+   127                                 
+   128                                 modulo:
+   129 0000011D 48C7C200000000          mov rdx, 0
+   130 00000124 4889F8                  mov rax, rdi
+   131 00000127 89F3                    mov ebx, esi
+   132 00000129 F7F3                    div ebx
+   133 0000012B 89D0                    mov eax, edx
+   134                                 
+   135 0000012D C3                      ret
+   136                                 
+   137                                 
+   138                                 
+   139                                 [global atoi]
+   140                                 
+   141                                 atoi:
+   142 0000012E 80230F                  and byte[rbx], 0f
+   143 00000131 0203                    add al, byte[rbx]
+   144                                 
+   145 00000133 C3                      ret
+   146                                 
+   147                                 

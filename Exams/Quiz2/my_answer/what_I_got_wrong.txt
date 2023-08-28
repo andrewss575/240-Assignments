@@ -1,0 +1,2 @@
+The only thing I got wrong for this quiz is in the ddd debugger, to show all of the 10 elements of the array, 
+I do "x/10db &num" instead of "x/ub &num" which will only show the first element in the array

@@ -1,0 +1,55 @@
+     1                                 %line 1+1 amm.asm
+     2                                 
+     3                                 
+     4                                 [section .data]
+     5 00000000 E803EE02F401FA00E2-     array dw 1000, 750, 500, 250, 1250, 1500, 350
+     6 00000000 04DC055E01         
+     7 0000000E 0000                    min dw 0
+     8 00000010 0000                    max dw 0
+     9                                 
+    10                                 [section .text]
+    11                                 [global _start]
+    12                                 
+    13                                 _start:
+    14                                 
+    15                                 
+    16                                 
+    17 00000000 48C7C000000000          mov rax, 0
+    18 00000007 48C7C106000000          mov rcx, 6
+    19 0000000E 48C7C600000000          mov rsi, 0
+    20 00000015 668B86[00000000]        mov ax, word[array + rsi]
+    21 0000001C 66890425[00000000]      mov word[max], ax
+    22 00000024 66890425[00000000]      mov word[min], ax
+    23                                 
+    24                                 arr_loop:
+    25                                 
+    26 0000002C 4883C602                add rsi, 2
+    27 00000030 668B86[00000000]        mov ax, word[array + rsi]
+    28                                 
+    29                                 
+    30 00000037 663B0425[00000000]      cmp ax, word[max]
+    31 0000003F 7F18                    jg max_found
+    32                                 
+    33                                 
+    34 00000041 663B0425[00000000]      cmp ax, word[min]
+    35 00000049 7C02                    jl min_found
+    36                                 
+    37                                 
+    38 0000004B E2DD                    loop arr_loop
+    39 0000004D EB14                    jmp end
+    40                                 
+    41                                 
+    42                                 min_found:
+    43 0000004F 66890425[00000000]      mov word[min], ax
+    44 00000057 E2D1                    loop arr_loop
+    45 00000059 EB08                    jmp end
+    46                                 
+    47                                 
+    48                                 max_found:
+    49 0000005B 66890425[00000000]      mov word[max], ax
+    50 00000063 E2C5                    loop arr_loop
+    51                                 
+    52                                 end:
+    53 00000065 48C7C03C000000          mov rax, 60
+    54 0000006C 48C7C700000000          mov rdi, 0
+    55 00000073 0F05                    syscall

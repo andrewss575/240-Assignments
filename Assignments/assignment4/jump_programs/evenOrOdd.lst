@@ -1,0 +1,44 @@
+     1                                 %line 1+1 evenOrOdd.asm
+     2                                 
+     3                                 
+     4                                 
+     5                                 
+     6                                 
+     7                                 
+     8                                 
+     9                                 
+    10                                 [section .data]
+    11 00000000 4501                    num1 dw 325
+    12 00000002 0000                    even dw 0
+    13 00000004 0000                    odd dw 0
+    14                                 
+    15                                 [section .text]
+    16                                 [global _start]
+    17                                 
+    18                                 _start:
+    19                                 
+    20                                 
+    21                                 
+    22                                 
+    23 00000000 668B0425[00000000]      mov ax, word[num1]
+    24 00000008 B102                    mov cl, 2
+    25                                 
+    26                                 
+    27 0000000A F6F1                    div cl
+    28                                 
+    29 0000000C 80FC00                  cmp ah, 0
+    30 0000000F 7508                    jne is_odd
+    31                                 
+    32                                 is_even:
+    33 00000011 66FF0425[00000000]      inc word[even]
+    34 00000019 EB08                    jmp end
+    35                                 is_odd:
+    36 0000001B 66FF0425[00000000]      inc word[odd]
+    37 00000023 EBFE                    jmp end
+    38                                 
+    39                                 end:
+    40 00000025 48C7C03C000000          mov rax, 60
+    41 0000002C 48C7C700000000          mov rdi, 0
+    42 00000033 0F05                    syscall
+    43                                 
+    44                                 

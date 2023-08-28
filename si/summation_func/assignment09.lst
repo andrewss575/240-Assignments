@@ -1,0 +1,131 @@
+     1                                 %line 1+1 assignment09.asm
+     2                                 
+     3                                 
+     4                                 %line 10+1 assignment09.asm
+     5                                 
+     6                                 %line 18+1 assignment09.asm
+     7                                 
+     8                                 [section .bss]
+     9 00000000 <gap>                  buffer resb 4
+    10 00000004 <gap>                  num resw 1
+    11 00000006 <gap>                  sumN resw 1
+    12                                 
+    13                                 [section .data]
+    14 00000000 496E7075742061206E-    msg1 db "Input a number (100~255): "
+    15 00000000 756D62657220283130-
+    16 00000000 307E323535293A20   
+    17 0000001A 28312A3229202B2028-    msg2 db "(1*2) + (2*2) + (2*3) +...+ "
+    18 0000001A 322A3229202B202832-
+    19 0000001A 2A3329202B2E2E2E2B-
+    20 0000001A 20                 
+    21 00000036 203D20                 msg3 db " = "
+    22 00000039 3030303030300A         ascii db "000000", 10
+    23                                 
+    24                                 [section .text]
+    25                                 [global _start]
+    26                                 _start:
+    27 00000000 48C7C001000000          mov rax, 1
+    28                                 %line 33+0 assignment09.asm
+    29 00000007 48C7C701000000          mov rdi, 1
+    30 0000000E 48C7C6[00000000]        mov rsi, msg1
+    31 00000015 48C7C21A000000          mov rdx, 26
+    32 0000001C 0F05                    syscall
+    33                                 %line 34+1 assignment09.asm
+    34 0000001E 48C7C000000000          mov rax, 0
+    35                                 %line 34+0 assignment09.asm
+    36 00000025 48C7C700000000          mov rdi, 0
+    37 0000002C 48C7C6[00000000]        mov rsi, buffer
+    38 00000033 48C7C204000000          mov rdx, 4
+    39 0000003A 0F05                    syscall
+    40                                 %line 35+1 assignment09.asm
+    41                                 
+    42                                 
+    43 0000003C 48C7C3[00000000]        mov rbx, buffer
+    44 00000043 E8A9000000              call toNumber
+    45                                 
+    46                                 
+    47 00000048 48C7C100000000          mov rcx, 0
+    48 0000004F 8B3C25[00000000]        mov edi, dword[num]
+    49 00000056 E8D1000000              call calculate
+    50                                 
+    51                                 
+    52 0000005B 48C7C105000000          mov rcx, 5
+    53 00000062 8B3C25[00000000]        mov edi, dword[sumN]
+    54 00000069 E8D3000000              call toAscii
+    55                                 
+    56 0000006E 48C7C001000000          mov rax, 1
+    57                                 %line 50+0 assignment09.asm
+    58 00000075 48C7C701000000          mov rdi, 1
+    59 0000007C 48C7C6[00000000]        mov rsi, msg2
+    60 00000083 48C7C219000000          mov rdx, 25
+    61 0000008A 0F05                    syscall
+    62                                 %line 51+1 assignment09.asm
+    63 0000008C 48C7C001000000          mov rax, 1
+    64                                 %line 51+0 assignment09.asm
+    65 00000093 48C7C701000000          mov rdi, 1
+    66 0000009A 48C7C6[00000000]        mov rsi, buffer
+    67 000000A1 48C7C203000000          mov rdx, 3
+    68 000000A8 0F05                    syscall
+    69                                 %line 52+1 assignment09.asm
+    70 000000AA 48C7C001000000          mov rax, 1
+    71                                 %line 52+0 assignment09.asm
+    72 000000B1 48C7C701000000          mov rdi, 1
+    73 000000B8 48C7C6[00000000]        mov rsi, msg3
+    74 000000BF 48C7C203000000          mov rdx, 3
+    75 000000C6 0F05                    syscall
+    76                                 %line 53+1 assignment09.asm
+    77 000000C8 48C7C001000000          mov rax, 1
+    78                                 %line 53+0 assignment09.asm
+    79 000000CF 48C7C701000000          mov rdi, 1
+    80 000000D6 48C7C6[00000000]        mov rsi, ascii
+    81 000000DD 48C7C207000000          mov rdx, 7
+    82 000000E4 0F05                    syscall
+    83                                 %line 54+1 assignment09.asm
+    84                                 
+    85 000000E6 48C7C03C000000          mov rax, 60
+    86 000000ED 48C7C700000000          mov rdi, 0
+    87 000000F4 0F05                    syscall
+    88                                 
+    89                                 
+    90                                 toNumber:
+    91 000000F6 48C7C000000000          mov rax, 0
+    92 000000FD 48C7C70A000000          mov rdi, 10
+    93 00000104 48C7C600000000          mov rsi, 0
+    94                                 next0:
+    95 0000010B 8A0C33                  mov cl, byte[rbx+rsi]
+    96 0000010E 80E10F                  and cl, 0f
+    97 00000111 00C8                    add al, cl
+    98 00000113 80D400                  adc ah, 0
+    99 00000116 4883FE02                cmp rsi, 2
+   100 0000011A 7401                    je skip0
+   101 0000011C 66F7E7                  mul di
+   102                                 skip0:
+   103 0000011F 48FFC6                  inc rsi
+   104 00000122 4883FE03                cmp rsi, 3
+   105 00000126 7CE1                    jl next0
+   106 00000128 66890425[00000000]      mov word[num], ax
+   107 00000130 C3                      ret
+   108                                 
+   109                                 
+   110                                 calculate:
+   111                                 next1:
+   112 00000131 B802000000              mov eax, 2
+   113 00000136 F7E1                    mul ecx
+   114 00000138 010425[00000000]        add dword[sumN], eax
+   115 0000013F FFC1                    inc ecx
+   116 00000141 39F9                    cmp ecx, edi
+   117 00000143 76EA                    jbe next1
+   118 00000145 C3                      ret
+   119                                 
+   120                                 
+   121                                 toAscii:
+   122 00000146 6689F8                  mov ax, di
+   123 00000149 66BB0A00                mov bx, 10
+   124                                 next2:
+   125 0000014D 66BA0000                mov dx, 0
+   126 00000151 66F7F3                  div bx
+   127 00000154 0091[00000000]          add byte[ascii+rcx], dl
+   128 0000015A 66FFC9                  dec cx
+   129 0000015D 6683F900                cmp cx, 0
+   130 00000161 7DE8                    jge next2
+   131 00000163 C3                      ret

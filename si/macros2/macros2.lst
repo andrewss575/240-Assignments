@@ -1,0 +1,38 @@
+     1                                 %line 1+1 macros2.asm
+     2                                 
+     3                                 
+     4                                 
+     5                                 
+     6                                 %line 18+1 macros2.asm
+     7                                 
+     8                                 [section .data]
+     9 00000000 7D000000CF03000052-     array dd 125, 975, 82, 308, 50
+    10 00000000 000000340100003200-
+    11 00000000 0000               
+    12 00000014 05000000                length dd 5
+    13                                 
+    14                                 [section .bss]
+    15 00000000 <gap>                   average resd 1
+    16                                 
+    17                                 [section .text]
+    18                                 [global _start]
+    19                                 
+    20                                 _start:
+    21 00000000 8B0C25[00000000]        mov ecx, dword[length]
+    22                                 %line 30+0 macros2.asm
+    23 00000007 BE00000000              mov esi, 0
+    24                                 ..@4.arr_loop:
+    25 0000000C 670304B5[00000000]      add eax, dword[array + esi * 4]
+    26 00000014 FFC6                    inc esi
+    27 00000016 E2F2                    loop ..@4.arr_loop
+    28                                 
+    29 00000018 BA00000000              mov edx, 0
+    30 0000001D F73425[00000000]        div dword[length]
+    31 00000024 890425[00000000]        mov dword[average], eax
+    32                                 
+    33                                 %line 31+1 macros2.asm
+    34                                 
+    35                                 end:
+    36 0000002B 48C7C03C000000          mov rax, 60
+    37 00000032 BF00000000              mov edi, 0
+    38 00000037 0F05                    syscall

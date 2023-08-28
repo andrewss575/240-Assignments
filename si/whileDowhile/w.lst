@@ -1,0 +1,22 @@
+     1                                 %line 1+1 w.asm
+     2                                 [section .data]
+     3 00000000 0000                    sum dw 0
+     4                                 
+     5                                 [section .text]
+     6                                 [global _start]
+     7                                 _start:
+     8 00000000 48C7C000000000          mov rax, 0
+     9 00000007 66B90000                mov cx, 0
+    10                                 
+    11                                 while_loop:
+    12 0000000B 66813C25[00000000]-     cmp word[sum], 200
+    13 0000000B C800               
+    14 00000015 7D0B                    jge end
+    15 00000017 66FFC1                  inc cx
+    16 0000001A 66010C25[00000000]      add word[sum], cx
+    17 00000022 EBE5                    jmp while_loop
+    18                                 
+    19                                 end:
+    20 00000024 48C7C03C000000          mov rax, 60
+    21 0000002B 48C7C700000000          mov rdi, 0
+    22 00000032 0F05                    syscall

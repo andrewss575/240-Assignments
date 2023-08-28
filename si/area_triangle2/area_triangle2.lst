@@ -1,0 +1,26 @@
+     1                                 %line 1+1 area_triangle2.asm
+     2                                 [section .data]
+     3                                 
+     4 00000000 00000000                product dd 0
+     5 00000004 1027                    base dw 10000
+     6 00000006 C800                    height dw 200
+     7 00000008 00000000                area dd 0
+     8 0000000C 02                      two db 2
+     9                                 
+    10                                 [section .text]
+    11                                 [global _start]
+    12                                 
+    13                                 _start:
+    14 00000000 668B0425[00000000]      mov ax, word[base]
+    15 00000008 66F72425[00000000]      mul word[height]
+    16 00000010 66890425[00000000]      mov word[product], ax
+    17 00000018 66891425[02000000]      mov word[product + 2], dx
+    18 00000020 8B0425[00000000]        mov eax, dword[product]
+    19 00000027 66BA0000                mov dx, 0
+    20 0000002B 66F73425[00000000]      div word[two]
+    21 00000033 890425[00000000]        mov dword[area], eax
+    22                                 
+    23 0000003A 48C7C03C000000          mov rax, 60
+    24 00000041 48C7C700000000          mov rdi, 0
+    25 00000048 0F05                    syscall
+    26                                 

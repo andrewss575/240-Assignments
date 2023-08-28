@@ -1,0 +1,21 @@
+     1                                 %line 1+1 area_cube.asm
+     2                                 
+     3                                 
+     4                                 [section .data]
+     5                                 
+     6 00000000 0600                    six dw 6
+     7 00000002 0A00                    side dw 10
+     8 00000004 0000                    s_area dw 0
+     9                                 
+    10                                 [section .text]
+    11                                 [global _start]
+    12                                 
+    13                                 _start:
+    14 00000000 668B0425[00000000]      mov ax, word[side]
+    15 00000008 66F72425[00000000]      mul word[side]
+    16 00000010 66F72425[00000000]      mul word[six]
+    17 00000018 66890425[00000000]      mov word[s_area], ax
+    18                                 
+    19 00000020 48C7C03C000000          mov rax, 60
+    20 00000027 48C7C700000000          mov rdi, 0
+    21 0000002E 0F05                    syscall
