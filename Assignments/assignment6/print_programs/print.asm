@@ -36,7 +36,7 @@ _start:
 	mov	ax, word[sum]				;ax = sum = 5050
 	cwd						;ax = ax:dx (changes 16 bit to 32 bit register)
 	mov	bx, 1000				;bx = 1000
-	div	bx					;ax = 5050/1000 = 5 ;bx = 5050%1000 = 50
+	div	bx					;ax = 5050/1000 = 5 ;dx = 5050%1000 = 50
         add     byte[ascii+0], al			;ascii+0 = al + 30h = 5 + 30h = 35h = '5'
         						;ascii = '5000', 10					
         ;getting the second digit			

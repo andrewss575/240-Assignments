@@ -1,0 +1,38 @@
+     1                                 %line 1+1 exfunc.asm
+     2                                 [section .data]
+     3 00000000 0000000000000000        num dq 0
+     4                                 
+     5                                 [section .text]
+     6                                 [global _start]
+     7                                 
+     8                                 _start:
+     9 00000000 48C7C014000000          mov rax, 20
+    10                                 
+    11                                 
+    12 00000007 48C7C705000000          mov rdi, 5
+    13 0000000E 48C7C602000000          mov rsi, 2
+    14 00000015 48C7C2[00000000]        mov rdx, num
+    15 0000001C E80C000000              call myFunction
+    16 00000021 5A                      pop rdx
+    17                                 
+    18 00000022 48C7C03C000000          mov rax, 60
+    19 00000029 48C7C700000000          mov rdi, 0
+    20 00000030 0F05                    syscall
+    21                                 
+    22                                 
+    23                                 
+    24                                 [global myFunction]
+    25                                 
+    26                                 myFunction:
+    27 00000032 50                      push rax
+    28 00000033 52                      push rdx
+    29                                 
+    30 00000034 48C7C064000000          mov rax, 100
+    31 0000003B 48F7E6                  mul rsi
+    32                                 
+    33 0000003E 4801F8                  add rax, rdi
+    34 00000041 5A                      pop rdx
+    35 00000042 488902                  mov qword[rdx], rax
+    36                                 
+    37 00000045 58                      pop rax
+    38 00000046 C3                      ret

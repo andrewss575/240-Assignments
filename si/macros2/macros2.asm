@@ -5,10 +5,14 @@
 %macro arr_average 3
 	mov	ecx, dword[%2]
 	mov	esi, 0
+	mov	rax, 0
 %%arr_loop:
 	add	eax, dword[%1 + esi * 4]
 	inc	esi
-	loop	%%arr_loop
+	dec rcx
+	cmp rcx, 0
+	jne arr_loop
+	;loop	%%arr_loop
 	
 	mov	edx, 0
 	div	dword[%2]
@@ -17,19 +21,24 @@
 %endmacro
 
 section	.data
-	array	dd	125, 975, 82, 308, 50
-	length	dd	5
+	array1	dd	125, 975, 82, 308, 50, 23
+	length1	dd	6
+	array2	dd	13, 121, 88, 100, 145, 54, 19
+	length2	dd	7
 	
 section	.bss
-	average	resd	1
+	average1	resd	1
+	average2	resd	1
+	
 	
 section	.text
 	global	_start
 	
 _start:
-	arr_average	array, length, average
+	arr_average	array1, length1, average1
+	arr_average	array2, length2, average2
 
 end:
 	mov	rax, 60
-	mov	edi, 0
+	mov	rdi, 0
 	syscall

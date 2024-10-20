@@ -1,0 +1,58 @@
+     1                                 %line 1+1 ex.asm
+     2                                 
+     3                                 
+     4                                 
+     5                                 
+     6                                 
+     7                                 [section .data]
+     8                                 
+     9                                 S_IRUSR equ 00400
+    10                                 S_IWUSR equ 00200
+    11                                 
+    12                                 
+    13                                 
+    14                                 
+    15 00000000 75726C2E74787400       fileName db "url.txt", 0
+    16 00000008 687474703A2F2F7777-    url db "http://www.giggle.com"
+    17 00000008 772E676967676C652E-
+    18 00000008 636F6D             
+    19 0000001D 1400000000000000       len dq $-url-1
+    20 00000025 0000000000000000       fileDesc dq 0
+    21                                 
+    22                                 
+    23                                 
+    24                                 [section .text]
+    25                                 [global _start]
+    26                                 
+    27                                 _start:
+    28                                 
+    29                                 
+    30                                 openInputFile:
+    31 00000000 48C7C055000000          mov rax, 85
+    32 00000007 48C7C7[00000000]        mov rdi, fileName
+    33 0000000E 48C7C680010000          mov rsi, S_IRUSR | S_IWUSR
+    34 00000015 0F05                    syscall
+    35 00000017 48890425[00000000]      mov qword [fileDesc], rax
+    36                                 
+    37                                 
+    38 0000001F 48C7C001000000          mov rax, 1
+    39 00000026 488B3C25[00000000]      mov rdi, qword[fileDesc]
+    40 0000002E 48C7C6[00000000]        mov rsi, url
+    41 00000035 488B1425[00000000]      mov rdx, qword [len]
+    42 0000003D 0F05                    syscall
+    43                                 
+    44                                 
+    45                                 
+    46                                 
+    47                                 
+    48                                 
+    49                                 
+    50 0000003F 48C7C002000000          mov rax, 2
+    51 00000046 488B3C25[00000000]      mov rdi, qword [fileDesc]
+    52 0000004E 0F05                    syscall
+    53                                 
+    54                                 
+    55 00000050 48C7C03C000000          mov rax, 60
+    56 00000057 48C7C700000000          mov rdi, 0
+    57 0000005E 0F05                    syscall
+    58                                 

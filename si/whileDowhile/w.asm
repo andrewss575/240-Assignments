@@ -1,4 +1,5 @@
-;this program uses a while loop to add 1+2+3+4+5... until sum is greater than or equal to 200
+;this program uses a while loop to add 1+2+3+4+5... 
+; until sum is greater than or equal to 100
 
 section .data
 	sum	dw	0
@@ -10,7 +11,7 @@ _start:
 	mov 	cx, 0
 	
 while_loop:
-	cmp	word[sum], 200
+	cmp	word[sum], 100
 	jge	end
 	inc	cx
 	add	word[sum], cx

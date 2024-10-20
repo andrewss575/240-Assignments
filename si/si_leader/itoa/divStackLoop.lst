@@ -1,0 +1,37 @@
+     1                                 %line 1+1 divStackLoop.asm
+     2                                 
+     3                                 
+     4                                 [section .data]
+     5 00000000 D204                    num dw 1234
+     6                                 [section .bss]
+     7 00000000 <gap>                   ascii resb 3
+     8                                 
+     9                                 [section .text]
+    10                                 [global _start]
+    11                                 
+    12                                 _start:
+    13 00000000 48C7C104000000          mov rcx, 4
+    14 00000007 66BB0A00                mov bx, 10
+    15 0000000B 668B0425[00000000]      mov ax, word[num]
+    16                                 
+    17                                 pushLoop:
+    18 00000013 48C7C200000000          mov rdx, 0
+    19 0000001A 66F7F3                  div bx
+    20 0000001D 80C230                  add dl, '0'
+    21 00000020 52                      push rdx
+    22 00000021 E2EE                    loop pushLoop
+    23                                 
+    24 00000023 48C7C104000000          mov rcx, 4
+    25 0000002A 48C7C600000000          mov rsi, 0
+    26                                 
+    27                                 popLoop:
+    28 00000031 58                      pop rax
+    29 00000032 8886[00000000]          mov byte[ascii + rsi], al
+    30 00000038 48FFC6                  inc rsi
+    31 0000003B E2F2                    loop popLoop
+    32                                 
+    33                                 end:
+    34 0000003D 48C7C03C000000          mov rax, 60
+    35 00000044 48C7C700000000          mov rdi, 0
+    36 0000004B 0F05                    syscall
+    37                                 

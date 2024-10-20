@@ -1,0 +1,15 @@
+     1                                 %line 1+1 check.asm
+     2                                 [section .data]
+     3 00000000 C8                      num1 db 200
+     4                                 
+     5                                 [section .text]
+     6                                 [global _start]
+     7                                 start:
+     8                                 
+     9 00000000 49C7C3C8000000          mov r11, 200
+    10 00000007 488B0425[00000000]      mov rax, qword[num1]
+    11                                 
+    12 0000000F 48C7C03C000000          mov rax, 60
+    13 00000016 48C7C700000000          mov rdi, 0
+    14 0000001D 0F05                    syscall
+    15                                 

@@ -1,0 +1,131 @@
+     1                                 %line 8+1 func.asm
+     2                                 
+     3                                 %line 16+1 func.asm
+     4                                 
+     5                                 [section .data]
+     6 00000000 456E74657220796F75-     msg1 db "Enter your addition expression: "
+     7 00000000 72206164646974696F-
+     8 00000000 6E2065787072657373-
+     9 00000000 696F6E3A20         
+    10 00000020 203D20                  msg2 db " = "
+    11 00000023 300A                    ascii db "0", 10
+    12                                 
+    13                                 [section .bss]
+    14 00000000 <gap>                   buffer resb 4
+    15 00000004 <gap>                   result resb 1
+    16                                 
+    17                                 [section .text]
+    18                                 [global _start]
+    19                                 
+    20                                 _start:
+    21                                 
+    22 00000000 48C7C001000000          mov rax, 1
+    23                                 %line 31+0 func.asm
+    24 00000007 48C7C701000000          mov rdi, 1
+    25 0000000E 48C7C6[00000000]        mov rsi, msg1
+    26 00000015 48C7C220000000          mov rdx, 32
+    27 0000001C 0F05                    syscall
+    28                                 %line 32+1 func.asm
+    29 0000001E 48C7C000000000          mov rax, 0
+    30                                 %line 32+0 func.asm
+    31 00000025 48C7C700000000          mov rdi, 0
+    32 0000002C 48C7C6[00000000]        mov rsi, buffer
+    33 00000033 48C7C204000000          mov rdx, 4
+    34 0000003A 0F05                    syscall
+    35                                 %line 33+1 func.asm
+    36                                 
+    37                                 
+    38                                 
+    39 0000003C 802425[00000000]0F      and byte[buffer], 0f
+    40 00000044 802425[02000000]0F      and byte[buffer + 2], 0f
+    41                                 
+    42 0000004C 408A3C25[00000000]      mov dil, byte[buffer]
+    43 00000054 408A3425[01000000]      mov sil, byte[buffer + 1]
+    44 0000005C 8A1425[02000000]        mov dl, byte[buffer + 2]
+    45 00000063 E883000000              call sign
+    46                                 
+    47                                 
+    48 00000068 800425[00000000]30      add byte[buffer], 30
+    49 00000070 800425[02000000]30      add byte[buffer+2], 30
+    50                                 
+    51                                 
+    52 00000078 48C7C001000000          mov rax, 1
+    53                                 %line 49+0 func.asm
+    54 0000007F 48C7C701000000          mov rdi, 1
+    55 00000086 48C7C6[00000000]        mov rsi, buffer
+    56 0000008D 48C7C203000000          mov rdx, 3
+    57 00000094 0F05                    syscall
+    58                                 %line 50+1 func.asm
+    59 00000096 48C7C001000000          mov rax, 1
+    60                                 %line 50+0 func.asm
+    61 0000009D 48C7C701000000          mov rdi, 1
+    62 000000A4 48C7C6[00000000]        mov rsi, msg2
+    63 000000AB 48C7C203000000          mov rdx, 3
+    64 000000B2 0F05                    syscall
+    65                                 %line 51+1 func.asm
+    66                                 
+    67 000000B4 8A2425[00000000]        mov ah, byte[result]
+    68 000000BB 002425[00000000]        add byte[ascii], ah
+    69 000000C2 48C7C001000000          mov rax, 1
+    70                                 %line 54+0 func.asm
+    71 000000C9 48C7C701000000          mov rdi, 1
+    72 000000D0 48C7C6[00000000]        mov rsi, ascii
+    73 000000D7 48C7C202000000          mov rdx, 2
+    74 000000DE 0F05                    syscall
+    75                                 %line 55+1 func.asm
+    76                                 
+    77                                 
+    78 000000E0 48C7C03C000000          mov rax, 60
+    79 000000E7 48C7C700000000          mov rdi, 0
+    80 000000EE 0F05                    syscall
+    81                                 
+    82                                 
+    83                                 
+    84                                 [global sign]
+    85                                 
+    86                                 sign:
+    87                                 
+    88                                 
+    89                                 
+    90 000000F0 4080FE2B                cmp sil, 0x2B
+    91 000000F4 7412                    je add_sign
+    92 000000F6 4080FE2D                cmp sil, 0x2D
+    93 000000FA 741D                    je sub_sign
+    94 000000FC 4080FE2A                cmp sil, 0x2A
+    95 00000100 7424                    je mul_sign
+    96 00000102 4080FE2F                cmp sil, 0x2F
+    97 00000106 742C                    je div_sign
+    98                                 
+    99 00000108 EB3C                    jmp end
+   100                                 
+   101                                 
+   102                                  add_sign:
+   103 0000010A 40003C25[00000000]      add byte[result], dil
+   104 00000112 001425[00000000]        add byte[result], dl
+   105 00000119 EB2B                    jmp end
+   106                                 
+   107                                 
+   108                                  sub_sign:
+   109 0000011B 4028D7                  sub dil, dl
+   110 0000011E 40883C25[00000000]      mov byte[result], dil
+   111 00000126 EB1E                    jmp end
+   112                                 
+   113                                 
+   114                                  mul_sign:
+   115 00000128 4088F8                  mov al, dil
+   116 0000012B F6E2                    mul dl
+   117 0000012D 880425[00000000]        mov byte[result], al
+   118 00000134 EB10                    jmp end
+   119                                 
+   120                                 
+   121                                  div_sign:
+   122 00000136 4088F8                  mov al, dil
+   123 00000139 88E3                    mov bl, ah
+   124 0000013B B400                    mov ah, 0
+   125 0000013D F6FA                    idiv dl
+   126 0000013F 880425[00000000]        mov byte[result], al
+   127 00000146 EBFE                    jmp end
+   128                                 
+   129                                 
+   130                                  end:
+   131 00000148 C3                      ret

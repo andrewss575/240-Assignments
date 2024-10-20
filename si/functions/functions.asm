@@ -11,11 +11,18 @@ section	.text
 	global	_start
 	
 _start:
+	mov	rdi, 10
+	push	rdi
+
 	mov	rdi, array
 	mov	rsi, qword[len]
 	mov	rdx, sum
 	mov	rcx, ave
 	call	average
+	
+	mov rax, 60
+	mov rdi, 0
+	syscall
 	
 ;**********FUNCTION****************************************
 
@@ -24,7 +31,7 @@ global average
 average:
 
 	push	r12			;prologue(keep track of pushes)
-	
+	add	r11, 2
 	mov	rax, 0
 	mov	r10, 0
 	

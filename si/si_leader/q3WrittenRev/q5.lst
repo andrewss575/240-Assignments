@@ -1,0 +1,55 @@
+     1                                 %line 1+1 q5.asm
+     2                                 
+     3                                 
+     4                                 
+     5                                 [section .data]
+     6 00000000 767778797A             array db "vwxyz"
+     7 00000005 0500000000000000       len dq 5
+     8                                 
+     9                                 
+    10                                 [section .text]
+    11                                 [global _start]
+    12                                 _start:
+    13 00000000 488B0C25[00000000]      mov rcx, qword[len]
+    14 00000008 49C7C400000000          mov r12, 0
+    15                                 
+    16                                 
+    17                                 
+    18                                 
+    19                                 pushLoop:
+    20 0000000F 48C7C000000000          mov rax, 0
+    21 00000016 418A8424[00000000]      mov al, byte[array + r12]
+    22 0000001E 50                      push rax
+    23                                 
+    24 0000001F 49FFC4                  inc r12
+    25 00000022 E2E9                    loop pushLoop
+    26                                 
+    27                                 
+    28                                 
+    29 00000024 488B0C25[00000000]      mov rcx, qword[len]
+    30 0000002C 49C7C400000000          mov r12, 0
+    31                                 
+    32                                 
+    33                                 
+    34                                 
+    35                                 popLoop:
+    36 00000033 58                      pop rax
+    37 00000034 41888424[00000000]      mov byte[array + r12], al
+    38 0000003C 49FFC4                  inc r12
+    39 0000003F E2F0                    loop popLoop
+    40                                 
+    41                                 
+    42                                 
+    43                                 
+    44                                 
+    45                                 
+    46                                 
+    47                                 
+    48                                 
+    49                                 
+    50                                 
+    51                                 last:
+    52 00000041 48C7C03C000000          mov rax, 60
+    53 00000048 48C7C700000000          mov rdi, 0
+    54 0000004F 0F05                    syscall
+    55                                 

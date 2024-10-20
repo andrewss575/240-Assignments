@@ -21,7 +21,7 @@ _start:
         ; we cannot use ah and al and then have ax be 
         ; desired output(see base_add.asm). We need 
         ; 16-bit registers so we use ax and bx and
-        ; manually crunch them together(as seen in line 32 and 33).
+        ; manually crunch them together(as seen in line 39 and 40).
         ; all values are inputed into the stack	and each section 
         ; of the stack is 8 bits. Because ax is 16 bits, line 27 
         ; saves sum as ax(0x1170) which takes up two boxes of the stack(sum+0 and sum+1). 

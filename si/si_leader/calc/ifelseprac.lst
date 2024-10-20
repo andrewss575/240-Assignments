@@ -1,0 +1,43 @@
+     1                                 %line 1+1 ifelseprac.asm
+     2                                 
+     3                                 
+     4                                 
+     5                                 
+     6                                 
+     7                                 
+     8                                 
+     9                                 
+    10                                 [section .data]
+    11 00000000 7D                     num db 125
+    12 00000001 00                     is_even db 0
+    13 00000002 00                     is_odd db 0
+    14 00000003 313235206973206F64-    text_odd db "125 is odd", 10
+    15 00000003 640A               
+    16                                 
+    17                                 [section .text]
+    18                                 [global _start]
+    19                                 
+    20                                 _start:
+    21                                 
+    22 00000000 B07D                    mov al, 125
+    23 00000002 B102                    mov cl, 2
+    24 00000004 F6F1                    div cl
+    25 00000006 80FE00                  cmp dh, 0
+    26 00000009 7405                    je even_num
+    27 0000000B FE0425[00000000]        inc byte[is_odd]
+    28                                 
+    29                                 
+    30                                 
+    31                                 even_num:
+    32 00000012 FE0425[00000000]        inc byte[is_even]
+    33 00000019 48C7C001000000          mov rax, 1
+    34 00000020 48C7C701000000          mov rdi, 1
+    35 00000027 48C7C6[00000000]        mov rsi, text_odd
+    36 0000002E 48C7C20B000000          mov rdx, 11
+    37 00000035 0F05                    syscall
+    38                                 
+    39 00000037 48C7C03C000000         mov rax, 60
+    40 0000003E 48C7C700000000         mov rdi, 0
+    41 00000045 0F05                   syscall
+    42                                 
+    43                                 

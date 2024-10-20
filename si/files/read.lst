@@ -1,0 +1,58 @@
+     1                                 %line 1+1 read.asm
+     2                                 
+     3                                 [section .data]
+     4                                 
+     5                                 O_RDONLY equ 000000
+     6                                 
+     7                                 
+     8                                 
+     9                                 BUFF_SIZE equ 255
+    10 00000000 75726C2E74787400       fileName db "url.txt", 0
+    11 00000008 0000000000000000       fileDesc dq 0
+    12                                 
+    13                                 [section .bss]
+    14 00000000 <gap>                  readBuffer resb BUFF_SIZE
+    15                                 
+    16                                 [section .text]
+    17                                 [global _start]
+    18                                 _start:
+    19                                 
+    20                                 
+    21                                 
+    22                                 
+    23                                 
+    24                                 
+    25                                 
+    26                                 
+    27                                 
+    28                                 
+    29                                 
+    30                                 
+    31                                 
+    32                                 
+    33                                 openInputFile:
+    34 00000000 48C7C002000000          mov rax, 2
+    35 00000007 48C7C7[00000000]        mov rdi, fileName
+    36 0000000E 48C7C600000000          mov rsi, O_RDONLY
+    37 00000015 0F05                    syscall
+    38                                 
+    39 00000017 48890425[00000000]      mov qword [fileDesc], rax
+    40                                 
+    41 0000001F 48C7C000000000          mov rax, 0
+    42 00000026 488B3C25[00000000]      mov rdi, qword [fileDesc]
+    43 0000002E 48C7C6[00000000]        mov rsi, readBuffer
+    44 00000035 48C7C2FF000000          mov rdx, BUFF_SIZE
+    45 0000003C 0F05                    syscall
+    46                                 
+    47                                 
+    48                                 
+    49                                 
+    50                                 
+    51                                 
+    52 0000003E 48C7C003000000          mov rax, 3
+    53 00000045 488B3C25[00000000]      mov rdi, qword [fileDesc]
+    54 0000004D 0F05                    syscall
+    55                                 
+    56 0000004F 48C7C03C000000          mov rax, 60
+    57 00000056 48C7C700000000          mov rdi, 0
+    58 0000005D 0F05                    syscall

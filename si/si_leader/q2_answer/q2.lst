@@ -1,0 +1,42 @@
+     1                                 %line 1+1 q2.asm
+     2                                 [section .data]
+     3 00000000 3CF417002EFB290980-     shortArr dw -3012, 23, -1234, 2345, 3456, 1267, -89, 6232, -231, 0
+     4 00000000 0DF304A7FF581819FF-
+     5 00000000 0000               
+     6                                 [section .bss]
+     7 00000000 <gap>                   evenSum resw 1
+     8                                 
+     9                                 [section .text]
+    10                                 [global _start]
+    11                                 _start:
+    12 00000000 48C7C600000000          mov rsi, 0
+    13 00000007 48C7C700000000          mov rdi, 0
+    14                                 
+    15                                 whileLoop:
+    16 0000000E 6683BE[00000000]00      cmp word[shortArr + rsi], 0
+    17 00000016 7435                    je end
+    18                                 
+    19 00000018 668B86[00000000]        mov ax, word[shortArr + rsi]
+    20 0000001F 6683F800                cmp ax, 0
+    21 00000023 7E04                    jle check2
+    22                                 
+    23 00000025 4883C602                add rsi, 2
+    24 00000029 EBE1                    jmp whileLoop
+    25                                 
+    26                                 check2:
+    27 0000002B 6699                    cwd
+    28 0000002D 66B90200                mov cx, 2
+    29 00000031 66F7F9                  idiv cx
+    30 00000034 668B86[00000000]        mov ax, word[shortArr + rsi]
+    31 0000003B 4883C602                add rsi, 2
+    32 0000003F 6683FA00                cmp dx, 0
+    33 00000043 75C7                    jne whileLoop
+    34 00000045 66010425[00000000]      add word[evenSum], ax
+    35 0000004D EBBD                    jmp whileLoop
+    36                                 
+    37                                 
+    38                                 end:
+    39 0000004F 48C7C03C000000          mov rax, 60
+    40 00000056 48C7C700000000          mov rdi, 0
+    41 0000005D 0F05                    syscall
+    42                                 

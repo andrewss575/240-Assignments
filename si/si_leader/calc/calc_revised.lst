@@ -1,0 +1,57 @@
+     1                                 %line 1+1 calc_revised.asm
+     2                                 
+     3                                 
+     4                                 
+     5                                 
+     6                                 
+     7                                 [section .data]
+     8                                 
+     9 00000000 0000                   step1 dw 0
+    10 00000002 00000000               step2 dd 0
+    11 00000006 00000000               step3 dd 0
+    12                                 
+    13 0000000A 0000                   answer dw 0
+    14 0000000C 0000                   remainder dw 0
+    15                                 
+    16                                 [section .text]
+    17                                 [global _start]
+    18                                 
+    19                                 _start:
+    20                                 
+    21 00000000 66B83C00                mov ax, 60
+    22 00000004 662D204E                sub ax, 20000
+    23 00000008 66890425[00000000]      mov word[step1], ax
+    24                                 
+    25                                 
+    26                                 
+    27 00000010 66B89C01                mov ax, 412
+    28 00000014 66BF9001                mov di, 400
+    29 00000018 66F7E7                  mul di
+    30 0000001B 66890425[00000000]      mov word[step2], ax
+    31 00000023 66891425[02000000]      mov word[step2+2], dx
+    32                                 
+    33                                 
+    34                                 
+    35 0000002B 668B0425[00000000]      mov ax, word[step1]
+    36 00000033 0FBFC0                  movsx eax, ax
+    37                                 
+    38 00000036 030425[00000000]        add eax, dword[step2]
+    39 0000003D 890425[00000000]        mov dword[step3], eax
+    40                                 
+    41                                 
+    42                                 
+    43                                 
+    44 00000044 48C7C200000000          mov rdx, 0
+    45 0000004B 668B0425[00000000]      mov ax, word[step3]
+    46 00000053 668B1425[02000000]      mov dx, word[step3 + 2]
+    47                                 
+    48 0000005B 66BF1900                mov di, 25
+    49 0000005F 66F7F7                  div di
+    50                                 
+    51 00000062 66890425[00000000]      mov word[answer], ax
+    52 0000006A 66891425[00000000]      mov word[remainder], dx
+    53                                 
+    54                                 
+    55 00000072 48C7C03C000000          mov rax, 60
+    56 00000079 48C7C700000000          mov rdi, 0
+    57 00000080 0F05                    syscall

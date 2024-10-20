@@ -8,49 +8,105 @@
      8 00000000 20                 
      9 0000001C 48656C6C6F2C20          hello db "Hello, "
     10 00000023 210A                    newline db "!", 10
-    11                                 
-    12                                 [section .bss]
-    13 00000000 <gap>                   username resb 1
-    14                                 
-    15                                 [section .text]
-    16                                 [global _start]
-    17                                 
-    18                                 _start:
-    19                                 
-    20 00000000 48C7C001000000          mov rax, 1
-    21 00000007 48C7C701000000          mov rdi, 1
-    22 0000000E 48C7C6[00000000]        mov rsi, prompt
-    23 00000015 48C7C21C000000          mov rdx, 28
-    24 0000001C 0F05                    syscall
-    25                                 
+    11 00000025 3030                    old_age db "00"
+    12 00000027 486F77206F6C642061-     age_prompt db "How old are you? (2 digit number): "
+    13 00000027 726520796F753F2028-
+    14 00000027 32206469676974206E-
+    15 00000027 756D626572293A20   
+    16 0000004A 576F772C20696E2031-     age_response db "Wow, in 10 years, you will be "
+    17 0000004A 302079656172732C20-
+    18 0000004A 796F752077696C6C20-
+    19 0000004A 626520             
+    20                                 [section .bss]
+    21 00000000 <gap>                   username resb 7
+    22 00000007 <gap>                   age resb 3
+    23                                 
+    24                                 [section .text]
+    25                                 [global _start]
     26                                 
-    27 0000001E 48C7C000000000          mov rax, 0
-    28 00000025 48C7C700000000          mov rdi, 0
-    29 0000002C 48C7C6[00000000]        mov rsi, username
-    30 00000033 48C7C207000000          mov rdx, 7
-    31 0000003A 0F05                    syscall
-    32                                 
-    33                                 
-    34 0000003C 48C7C001000000          mov rax, 1
-    35 00000043 48C7C701000000          mov rdi, 1
-    36 0000004A 48C7C6[00000000]        mov rsi, hello
-    37 00000051 48C7C207000000          mov rdx, 7
-    38 00000058 0F05                    syscall
-    39                                 
-    40                                 
-    41 0000005A 48C7C001000000          mov rax, 1
-    42 00000061 48C7C701000000          mov rdi, 1
-    43 00000068 48C7C6[00000000]        mov rsi, username
-    44 0000006F 48C7C206000000          mov rdx, 6
-    45 00000076 0F05                    syscall
-    46                                 
-    47                                 
-    48 00000078 48C7C001000000          mov rax, 1
-    49 0000007F 48C7C701000000          mov rdi, 1
-    50 00000086 48C7C6[00000000]        mov rsi, newline
-    51 0000008D 48C7C202000000          mov rdx, 2
-    52 00000094 0F05                    syscall
-    53                                 
-    54 00000096 48C7C03C000000          mov rax, 60
-    55 0000009D 48C7C700000000          mov rdi, 0
-    56 000000A4 0F05                    syscall
+    27                                 _start:
+    28                                 
+    29 00000000 48C7C001000000          mov rax, 1
+    30 00000007 48C7C701000000          mov rdi, 1
+    31 0000000E 48C7C6[00000000]        mov rsi, prompt
+    32 00000015 48C7C21C000000          mov rdx, 28
+    33 0000001C 0F05                    syscall
+    34                                 
+    35                                 
+    36 0000001E 48C7C000000000          mov rax, 0
+    37 00000025 48C7C700000000          mov rdi, 0
+    38 0000002C 48C7C6[00000000]        mov rsi, username
+    39 00000033 48C7C207000000          mov rdx, 7
+    40 0000003A 0F05                    syscall
+    41                                 
+    42                                 
+    43 0000003C 48C7C001000000          mov rax, 1
+    44 00000043 48C7C701000000          mov rdi, 1
+    45 0000004A 48C7C6[00000000]        mov rsi, hello
+    46 00000051 48C7C207000000          mov rdx, 7
+    47 00000058 0F05                    syscall
+    48                                 
+    49                                 
+    50 0000005A 48C7C001000000          mov rax, 1
+    51 00000061 48C7C701000000          mov rdi, 1
+    52 00000068 48C7C6[00000000]        mov rsi, username
+    53 0000006F 48C7C206000000          mov rdx, 6
+    54 00000076 0F05                    syscall
+    55                                 
+    56                                 
+    57 00000078 48C7C001000000          mov rax, 1
+    58 0000007F 48C7C701000000          mov rdi, 1
+    59 00000086 48C7C6[00000000]        mov rsi, newline
+    60 0000008D 48C7C202000000          mov rdx, 2
+    61 00000094 0F05                    syscall
+    62                                 
+    63                                 
+    64 00000096 48C7C001000000          mov rax, 1
+    65 0000009D 48C7C701000000          mov rdi, 1
+    66 000000A4 48C7C6[00000000]        mov rsi, age_prompt
+    67 000000AB 48C7C223000000          mov rdx, 35
+    68 000000B2 0F05                    syscall
+    69                                 
+    70                                 
+    71 000000B4 48C7C000000000          mov rax, 0
+    72 000000BB 48C7C700000000          mov rdi, 0
+    73 000000C2 48C7C6[00000000]        mov rsi, age
+    74 000000C9 48C7C203000000          mov rdx, 3
+    75 000000D0 0F05                    syscall
+    76                                 
+    77                                 
+    78 000000D2 8A0425[00000000]        mov al, byte[age]
+    79 000000D9 240F                    and al, 0f
+    80 000000DB FEC0                    inc al
+    81 000000DD 000425[00000000]        add byte[old_age], al
+    82                                 
+    83 000000E4 8A0425[01000000]        mov al, byte[age + 1]
+    84 000000EB 240F                    and al, 0f
+    85 000000ED 000425[01000000]        add byte[old_age + 1], al
+    86                                 
+    87                                 
+    88                                 
+    89 000000F4 48C7C001000000          mov rax, 1
+    90 000000FB 48C7C701000000          mov rdi, 1
+    91 00000102 48C7C6[00000000]        mov rsi, age_response
+    92 00000109 48C7C21E000000          mov rdx, 30
+    93 00000110 0F05                    syscall
+    94                                 
+    95                                 
+    96 00000112 48C7C001000000          mov rax, 1
+    97 00000119 48C7C701000000          mov rdi, 1
+    98 00000120 48C7C6[00000000]        mov rsi, old_age
+    99 00000127 48C7C202000000          mov rdx, 2
+   100 0000012E 0F05                    syscall
+   101                                 
+   102                                 
+   103 00000130 48C7C001000000          mov rax, 1
+   104 00000137 48C7C701000000          mov rdi, 1
+   105 0000013E 48C7C6[00000000]        mov rsi, newline
+   106 00000145 48C7C202000000          mov rdx, 2
+   107 0000014C 0F05                    syscall
+   108                                 
+   109                                 
+   110 0000014E 48C7C03C000000          mov rax, 60
+   111 00000155 48C7C700000000          mov rdi, 0
+   112 0000015C 0F05                    syscall

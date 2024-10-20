@@ -1,0 +1,59 @@
+     1                                 %line 1+1 addition.asm
+     2                                 [section .data]
+     3                                 SYS_exit equ 60
+     4                                 EXIT_SUCCESS equ 0
+     5                                 
+     6 00000000 0300                   a dw 3
+     7 00000002 0100                   b dw 1
+     8 00000004 0100                   c dw 1
+     9 00000006 0300                   d dw 3
+    10 00000008 0200                   e dw 2
+    11 0000000A 0400                   f dw 4
+    12 0000000C 0000                   x dw 0
+    13 0000000E 0000                   y dw 0
+    14                                 
+    15                                 [section .text]
+    16                                 [global _start]
+    17                                 _start:
+    18                                 
+    19 00000000 668B0425[00000000]     mov ax, word[a]
+    20 00000008 66F72C25[00000000]     imul word[f]
+    21 00000010 668B1C25[00000000]     mov bx, word[c]
+    22 00000018 66F72C25[00000000]     imul word[d]
+    23 00000020 6629D8                 sub ax, bx
+    24 00000023 668B1C25[00000000]     mov bx, word[a]
+    25 0000002B 66F72C25[00000000]     imul word[e]
+    26 00000033 6629D8                 sub ax, bx
+    27 00000036 6689C1                 mov cx, ax
+    28 00000039 668B0425[00000000]     mov ax, word[a]
+    29 00000041 66F72C25[00000000]     imul word[f]
+    30 00000049 668B1C25[00000000]     mov bx, word[c]
+    31 00000051 66F72C25[00000000]     imul word[e]
+    32 00000059 6629D8                 sub ax, bx
+    33 0000005C 668B1C25[00000000]     mov bx, word[b]
+    34 00000064 66F72C25[00000000]     imul word[d]
+    35 0000006C 6629D8                 sub ax, bx
+    36 0000006F 66F7F9                 idiv cx
+    37 00000072 66890425[00000000]     mov word[x], ax
+    38                                 
+    39 0000007A 668B0425[00000000]     mov ax, word[c]
+    40 00000082 66F72C25[00000000]     imul word[e]
+    41 0000008A 668B1C25[00000000]     mov bx, word[b]
+    42 00000092 66F72C25[00000000]     imul word[f]
+    43 0000009A 6629D8                 sub ax, bx
+    44 0000009D 668B1C25[00000000]     mov bx, word[a]
+    45 000000A5 66F72C25[00000000]     imul word[e]
+    46 000000AD 6629D8                 sub ax, bx
+    47 000000B0 6689C1                 mov cx, ax
+    48 000000B3 668B0425[00000000]     mov ax, word[c]
+    49 000000BB 66F72C25[00000000]     imul word[e]
+    50 000000C3 668B1C25[00000000]     mov bx, word[b]
+    51 000000CB 66F72C25[00000000]     imul word[d]
+    52 000000D3 6629D8                 sub ax, bx
+    53 000000D6 66F7F9                 idiv cx
+    54 000000D9 66890425[00000000]     mov word[y], ax
+    55                                 
+    56 000000E1 48C7C03C000000         mov rax, 60
+    57 000000E8 48C7C700000000         mov rdi, 0
+    58 000000EF 0F05                   syscall
+    59                                 

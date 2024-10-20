@@ -1,0 +1,17 @@
+     1                                 %line 1+1 add.asm
+     2                                 [section .data]
+     3 00000000 1800000000000000        num1 dq 24
+     4 00000008 F000000000000000        num2 dq 240
+     5 00000010 0000000000000000        sum dq 0
+     6                                 
+     7                                 [section .text]
+     8                                 [global _start]
+     9                                 _start:
+    10                                 
+    11 00000000 488B0425[00000000]      mov rax, qword[num1]
+    12 00000008 48030425[00000000]      add rax, qword[num2]
+    13 00000010 48890425[00000000]      mov qword[sum], rax
+    14                                 
+    15 00000018 48C7C03C000000          mov rax, 60
+    16 0000001F 48C7C700000000          mov rdi, 0
+    17 00000026 0F05                    syscall

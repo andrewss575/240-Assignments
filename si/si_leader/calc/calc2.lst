@@ -1,0 +1,43 @@
+     1                                 %line 1+1 calc2.asm
+     2                                 
+     3                                 
+     4                                 [section .data]
+     5                                 
+     6 00000000 0000                   answer dw 0
+     7 00000002 0000                   remainder dw 0
+     8                                 
+     9                                 [section .text]
+    10                                 [global _start]
+    11                                 
+    12                                 _start:
+    13                                 
+    14 00000000 66B87701                mov ax, 375
+    15 00000004 662D8813                sub ax, 5000
+    16 00000008 6683DA00                sbb dx, 0
+    17 0000000C 66890425[00000000]      mov word[answer], ax
+    18                                 
+    19                                 
+    20                                 
+    21 00000014 66B91900                mov cx, 25
+    22 00000018 66F7F9                  idiv cx
+    23                                 
+    24 0000001B 66890425[00000000]      mov word[answer], ax
+    25                                 
+    26 00000023 66890425[00000000]      mov word[answer], ax
+    27                                 
+    28                                 
+    29 0000002B B008                    mov al, 8
+    30 0000002D B30A                    mov bl, 10
+    31 0000002F F6E3                    mul bl
+    32                                 
+    33                                 
+    34                                 
+    35                                 
+    36 00000031 66010425[00000000]      add word[answer], ax
+    37                                 
+    38                                 
+    39                                 
+    40                                 
+    41 00000039 48C7C03C000000          mov rax, 60
+    42 00000040 48C7C701000000          mov rdi, 1
+    43 00000047 0F05                    syscall
