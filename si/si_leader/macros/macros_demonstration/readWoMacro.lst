@@ -1,0 +1,102 @@
+     1                                 %line 1+1 readWoMacro.asm
+     2                                 
+     3                                 %line 9+1 readWoMacro.asm
+     4                                 
+     5                                 %line 17+1 readWoMacro.asm
+     6                                 
+     7                                 [section .data]
+     8 00000000 506C6561736520656E-     prompt1 db "Please enter a letter: "
+     9 00000000 7465722061206C6574-
+    10 00000000 7465723A20         
+    11 00000017 506C6561736520656E-     prompt2 db "Please enter another letter: "
+    12 00000017 74657220616E6F7468-
+    13 00000017 6572206C6574746572-
+    14 00000017 3A20               
+    15 00000034 596F7520656E746572-     output db "You entered: "
+    16 00000034 65643A20           
+    17 00000041 0A                      newLine db 10
+    18                                 
+    19                                 [section .bss]
+    20 00000000 02                      char1 db 2
+    21 00000001 02                      char2 db 2
+    22                                 
+    23                                 [section .text]
+    24                                 [global _start]
+    25                                 _start:
+    26 00000000 48C7C001000000          mov rax, 1
+    27                                 %line 31+0 readWoMacro.asm
+    28 00000007 48C7C701000000          mov rdi, 1
+    29 0000000E 48C7C6[00000000]        mov rsi, prompt1
+    30 00000015 48C7C217000000          mov rdx, 23
+    31 0000001C 0F05                    syscall
+    32                                 %line 32+1 readWoMacro.asm
+    33 0000001E 48C7C000000000          mov rax, 0
+    34                                 %line 32+0 readWoMacro.asm
+    35 00000025 48C7C700000000          mov rdi, 0
+    36 0000002C 48C7C6[00000000]        mov rsi, char1
+    37 00000033 48C7C202000000          mov rdx, 2
+    38 0000003A 0F05                    syscall
+    39                                 %line 33+1 readWoMacro.asm
+    40 0000003C 48C7C001000000          mov rax, 1
+    41                                 %line 33+0 readWoMacro.asm
+    42 00000043 48C7C701000000          mov rdi, 1
+    43 0000004A 48C7C6[00000000]        mov rsi, output
+    44 00000051 48C7C20D000000          mov rdx, 13
+    45 00000058 0F05                    syscall
+    46                                 %line 34+1 readWoMacro.asm
+    47 0000005A 48C7C001000000          mov rax, 1
+    48                                 %line 34+0 readWoMacro.asm
+    49 00000061 48C7C701000000          mov rdi, 1
+    50 00000068 48C7C6[00000000]        mov rsi, char1
+    51 0000006F 48C7C202000000          mov rdx, 2
+    52 00000076 0F05                    syscall
+    53                                 %line 35+1 readWoMacro.asm
+    54 00000078 48C7C001000000          mov rax, 1
+    55                                 %line 35+0 readWoMacro.asm
+    56 0000007F 48C7C701000000          mov rdi, 1
+    57 00000086 48C7C6[00000000]        mov rsi, newLine
+    58 0000008D 48C7C201000000          mov rdx, 1
+    59 00000094 0F05                    syscall
+    60                                 %line 36+1 readWoMacro.asm
+    61                                 
+    62 00000096 48C7C001000000          mov rax, 1
+    63                                 %line 37+0 readWoMacro.asm
+    64 0000009D 48C7C701000000          mov rdi, 1
+    65 000000A4 48C7C6[00000000]        mov rsi, prompt2
+    66 000000AB 48C7C21D000000          mov rdx, 29
+    67 000000B2 0F05                    syscall
+    68                                 %line 38+1 readWoMacro.asm
+    69 000000B4 48C7C000000000          mov rax, 0
+    70                                 %line 38+0 readWoMacro.asm
+    71 000000BB 48C7C700000000          mov rdi, 0
+    72 000000C2 48C7C6[00000000]        mov rsi, char2
+    73 000000C9 48C7C202000000          mov rdx, 2
+    74 000000D0 0F05                    syscall
+    75                                 %line 39+1 readWoMacro.asm
+    76 000000D2 48C7C001000000          mov rax, 1
+    77                                 %line 39+0 readWoMacro.asm
+    78 000000D9 48C7C701000000          mov rdi, 1
+    79 000000E0 48C7C6[00000000]        mov rsi, output
+    80 000000E7 48C7C20D000000          mov rdx, 13
+    81 000000EE 0F05                    syscall
+    82                                 %line 40+1 readWoMacro.asm
+    83 000000F0 48C7C001000000          mov rax, 1
+    84                                 %line 40+0 readWoMacro.asm
+    85 000000F7 48C7C701000000          mov rdi, 1
+    86 000000FE 48C7C6[00000000]        mov rsi, char2
+    87 00000105 48C7C202000000          mov rdx, 2
+    88 0000010C 0F05                    syscall
+    89                                 %line 41+1 readWoMacro.asm
+    90 0000010E 48C7C001000000          mov rax, 1
+    91                                 %line 41+0 readWoMacro.asm
+    92 00000115 48C7C701000000          mov rdi, 1
+    93 0000011C 48C7C6[00000000]        mov rsi, newLine
+    94 00000123 48C7C201000000          mov rdx, 1
+    95 0000012A 0F05                    syscall
+    96                                 %line 42+1 readWoMacro.asm
+    97                                 
+    98 0000012C 48C7C03C000000          mov rax, 60
+    99 00000133 48C7C701000000          mov rdi, 1
+   100 0000013A 0F05                    syscall
+   101                                 
+   102                                 

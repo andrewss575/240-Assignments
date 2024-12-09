@@ -12,57 +12,53 @@
     12                                 
     13                                 
     14                                 
-    15                                 [section .data]
-    16 00000000 3CF417002EFBD7F680-     shortArr dw -3012, 23, -1234, -2345, 3456, 1267, -89, 6232, -231, 0
-    17 00000000 0DF304A7FF581819FF-
-    18 00000000 0000               
-    19                                 [section .bss]
-    20 00000000 <gap>                   oddSum resw 1
-    21                                 
-    22                                 [section .text]
-    23                                 [global _start]
-    24                                 _start:
-    25 00000000 48C7C600000000          mov rsi, 0
-    26 00000007 48C7C109000000          mov rcx, 9
-    27                                 
-    28                                 whileLoop:
-    29                                 
-    30 0000000E 668B86[00000000]        mov ax, word[shortArr + rsi]
-    31 00000015 6683F800                cmp ax, 0
-    32 00000019 7E0D                    jle check2
-    33                                 
-    34 0000001B 4883C602                add rsi, 2
-    35 0000001F 48FFC9                  dec rcx
-    36 00000022 4883F900                cmp rcx, 0
-    37 00000026 75E4                    jne whileLoop
-    38                                 
-    39                                 
-    40 00000028 EB2E                    jmp end
-    41                                 
+    15                                 
+    16                                 
+    17                                 [section .data]
+    18 00000000 3CF46F02D204D7F680-     shortArr dw -3012, 623, 1234, -2345, 3456, 12367, -89, 6232, -231, 0
+    19 00000000 0D4F30A7FF581819FF-
+    20 00000000 0000               
+    21                                 [section .bss]
+    22 00000000 <gap>                   div3Sum resw 1
+    23 00000002 <gap>                   newArr resw 10
+    24                                 
+    25                                 [section .text]
+    26                                 [global _start]
+    27                                 _start:
+    28 00000000 48C7C600000000          mov rsi, 0
+    29 00000007 49C7C300000000          mov r11, 0
+    30                                 
+    31                                 whileLoop:
+    32                                 
+    33 0000000E 668B8E[00000000]        mov cx, word[shortArr + rsi]
+    34 00000015 4883C602                add rsi, 2
+    35 00000019 6683F900                cmp cx, 0
+    36 0000001D 7C06                    jl check2
+    37                                 
+    38 0000001F 6683F900                cmp cx, 0
+    39 00000023 75E7                    jne whileLoop
+    40                                 
+    41 00000025 EB2A                    jmp end
     42                                 
-    43                                 
-    44                                 check2:
-    45                                 
-    46 0000002A 66BB0200                mov bx, 2
-    47 0000002E 48C7C200000000          mov rdx, 0
-    48 00000035 66F7FB                  idiv bx
-    49                                 
-    50 00000038 668B86[00000000]        mov ax, word[shortArr + rsi]
-    51 0000003F 4883C602                add rsi, 2
-    52 00000043 48FFC9                  dec rcx
-    53                                 
-    54 00000046 6683FA00                cmp dx, 0
-    55 0000004A 74C0                    je whileLoop
-    56                                 
-    57 0000004C 66010425[00000000]      add word[oddSum], ax
+    43                                 check2:
+    44 00000027 6689C8                  mov ax, cx
+    45 0000002A 66BB0300                mov bx, 3
+    46 0000002E 6699                    cwd
+    47 00000030 66F7FB                  idiv bx
+    48                                 
+    49 00000033 6683FA00                cmp dx, 0
+    50 00000037 74D3                    je whileLoop
+    51                                 
+    52 00000039 66010C25[00000000]      add word[div3Sum], cx
+    53 00000041 6641898B[00000000]      mov word[newArr + r11], cx
+    54 00000049 4983C302                add r11, 2
+    55                                 
+    56 0000004D 6683F900                cmp cx, 0
+    57 00000051 75B9                    jne whileLoop
     58                                 
     59                                 
-    60 00000054 4883F900                cmp rcx, 0
-    61 00000058 75B2                    jne whileLoop
-    62                                 
-    63                                 
-    64                                 end:
-    65 0000005A 48C7C03C000000          mov rax, 60
-    66 00000061 48C7C700000000          mov rdi, 0
-    67 00000068 0F05                    syscall
-    68                                 
+    60                                 end:
+    61 00000053 48C7C03C000000          mov rax, 60
+    62 0000005A 48C7C700000000          mov rdi, 0
+    63 00000061 0F05                    syscall
+    64                                 

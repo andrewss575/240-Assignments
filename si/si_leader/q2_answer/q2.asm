@@ -1,5 +1,5 @@
 ; signed short shortArr[10] = {-3012, 623, -1234, 2345, 3456, 1267, -89, 6232, -231, 0};
-; signed short evenSum;
+; signed int evenSum;
 ; register long rsi = 0 //64-bit register
 ; register long rdi = 0 //64-bit register
 ; while (num[rsi] != 0) {

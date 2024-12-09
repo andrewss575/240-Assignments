@@ -2,7 +2,7 @@
 ;program is similar to avgfuncWlocal.asm but this time, we want to run the function on three different arrays
 ; which requires 8 arguments. 
 
-;stats(arr1&, len1, arr2&, len2, arr3&, len3, sum&, avg&)
+;stats(arr1&, len1, arr2&, len2, arr3&, len3, avg&, sum&)
 
 section .data
 	arr1	dq	10, 20, 30, 40, 50, 60
@@ -40,8 +40,8 @@ arrLoop:
 	mov rcx, qword[len2]
 	mov r8, arr3
 	mov r9, qword[len3]
-	push sum
 	push avg
+	push sum
 	
 	call stats
 	
@@ -62,6 +62,9 @@ stats:
 
 	;prologue - reserves the previous value of rax in the stack befor enessing with the register
 	;as well as reserve a base pointer to the call/stack frame
+	
+	;we need to push rbp to save and then mov rsp into rbp to create a stack frame that is specific
+	;to the function itself. See the slides on functions for extra help
 	push rbp
 	mov rbp, rsp
 	

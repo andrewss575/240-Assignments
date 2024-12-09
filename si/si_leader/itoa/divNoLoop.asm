@@ -1,4 +1,5 @@
-;this program converts a decimal number into ascii without looping
+;this program converts a decimal number into ascii without looping. This is not efficient
+;because it requres you to know how many digits the number is.
 
 section .data
 	num	dw	1234

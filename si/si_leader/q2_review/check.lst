@@ -1,0 +1,13 @@
+     1                                 %line 1+1 check.asm
+     2                                 [section .text]
+     3                                 [global _start]
+     4                                 
+     5                                 _start:
+     6 00000000 66B86400                mov ax, 100
+     7 00000004 6699                    cwd
+     8 00000006 66B90300                mov cx, 3
+     9 0000000A 66F7F9                  idiv cx
+    10                                 
+    11 0000000D 48C7C03C000000          mov rax, 60
+    12 00000014 48C7C700000000          mov rdi, 0
+    13 0000001B 0F05                    syscall

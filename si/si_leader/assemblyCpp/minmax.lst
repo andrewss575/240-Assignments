@@ -1,0 +1,48 @@
+     1                                 %line 1+1 minmax.asm
+     2                                 [section .text]
+     3                                 [global arr_min_max]
+     4                                 
+     5                                 arr_min_max:
+     6                                 
+     7 00000000 48C7C000000000          mov rax, 0
+     8 00000007 4989F2                  mov r10, rsi
+     9 0000000A 49C7C300000000          mov r11, 0
+    10 00000011 428B041F                mov eax, dword[rdi + r11]
+    11 00000015 8901                    mov dword[rcx], eax
+    12 00000017 8902                    mov dword[rdx], eax
+    13                                 
+    14                                 arr_loop:
+    15 00000019 4983C304                add r11, 4
+    16 0000001D 428B041F                mov eax, dword[rdi + r11]
+    17                                 
+    18                                 
+    19 00000021 3B01                    cmp eax, dword[rcx]
+    20 00000023 7F1A                    jg max_found
+    21                                 
+    22                                 
+    23 00000025 3B02                    cmp eax, dword[rdx]
+    24 00000027 7C09                    jl min_found
+    25                                 
+    26                                 
+    27 00000029 49FFCA                  dec r10
+    28 0000002C 4983FA01                cmp r10, 1
+    29 00000030 75E5                    jne arr_loop
+    30 00000032 EB16                    jmp end
+    31                                 
+    32                                 
+    33                                 min_found:
+    34 00000034 8902                    mov dword[rdx], eax
+    35 00000036 49FFCA                  dec r10
+    36 00000039 4983FA01                cmp r10, 1
+    37 0000003D 75D8                    jne arr_loop
+    38 0000003F EB09                    jmp end
+    39                                 
+    40                                 
+    41                                 max_found:
+    42 00000041 8901                    mov dword[rcx], eax
+    43 00000043 49FFCA                  dec r10
+    44 00000046 4983FA01                cmp r10, 1
+    45 0000004A 75CB                    jne arr_loop
+    46                                 
+    47                                 end:
+    48 0000004C C3                      ret

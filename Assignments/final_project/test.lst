@@ -1,0 +1,106 @@
+     1                                 %line 8+1 test.asm
+     2                                 
+     3                                 %line 16+1 test.asm
+     4                                 
+     5                                 [section .data]
+     6 00000000 496E7075742061206E-     msg1 db "Input a number (004~999): "
+     7 00000000 756D62657220283030-
+     8 00000000 347E393939293A20   
+     9 0000001A 31202B2032202B2033-     msg2 db "1 + 2 + 3 +...+ "
+    10 0000001A 202B2E2E2E2B20     
+    11 0000002A 203D20                  msg3 db " = "
+    12                                 
+    13                                 [section .bss]
+    14 00000000 <gap>                   buffer resb 4
+    15 00000004 <gap>                   n resd 1
+    16 00000008 <gap>                   sumN resd 1
+    17 0000000C <gap>                   ascii resb 10
+    18                                 
+    19                                 [section .text]
+    20                                 [global _start]
+    21                                 
+    22                                 _start:
+    23 00000000 48C7C001000000          mov rax, 1
+    24                                 %line 32+0 test.asm
+    25 00000007 48C7C701000000          mov rdi, 1
+    26 0000000E 48C7C6[00000000]        mov rsi, msg1
+    27 00000015 48C7C21A000000          mov rdx, 26
+    28 0000001C 0F05                    syscall
+    29                                 %line 33+1 test.asm
+    30 0000001E 48C7C000000000          mov rax, 0
+    31                                 %line 33+0 test.asm
+    32 00000025 48C7C700000000          mov rdi, 0
+    33 0000002C 48C7C6[00000000]        mov rsi, buffer
+    34 00000033 48C7C204000000          mov rdx, 4
+    35 0000003A 0F05                    syscall
+    36                                 %line 34+1 test.asm
+    37                                 
+    38 0000003C 8A0425[00000000]        mov al, byte[buffer]
+    39 00000043 240F                    and al, 0f
+    40 00000045 B30A                    mov bl, 10
+    41 00000047 F6E3                    mul bl
+    42                                 
+    43 00000049 8A0C25[01000000]        mov cl, byte[buffer+1]
+    44 00000050 80E10F                  and cl, 0f
+    45 00000053 00C8                    add al, cl
+    46 00000055 80D400                  adc ah, 0
+    47 00000058 F6E3                    mul bl
+    48                                 
+    49 0000005A 8A0C25[02000000]        mov cl, byte[buffer+2]
+    50 00000061 80E10F                  and cl, 0f
+    51 00000064 00C8                    add al, cl
+    52 00000066 80D400                  adc ah, 0
+    53 00000069 66890425[00000000]      mov word[n], ax
+    54                                 
+    55 00000071 8B3425[00000000]        mov esi, dword[n]
+    56                                 doloop:
+    57 00000078 013425[00000000]        add dword[sumN], esi
+    58 0000007F FFCE                    dec esi
+    59 00000081 83FE00                  cmp esi, 0
+    60 00000084 7DF0                    jge doloop
+    61                                 
+    62 00000086 48C7C109000000          mov rcx, 9
+    63 0000008D BB0A000000              mov ebx, 10
+    64 00000092 8B0425[00000000]        mov eax, dword[sumN]
+    65                                 divloop:
+    66 00000099 BA00000000              mov edx, 0
+    67 0000009E F7F3                    div ebx
+    68 000000A0 80C230                  add dl, '0'
+    69 000000A3 0091[00000000]          add byte[ascii+rcx], dl
+    70                                 
+    71 000000A9 48FFC9                  dec rcx
+    72 000000AC 4883F900                cmp rcx, 0
+    73 000000B0 7DE5                    jge divloop
+    74                                 
+    75 000000B2 48C7C001000000          mov rax, 1
+    76                                 %line 72+0 test.asm
+    77 000000B9 48C7C701000000          mov rdi, 1
+    78 000000C0 48C7C6[00000000]        mov rsi, msg2
+    79 000000C7 48C7C210000000          mov rdx, 16
+    80 000000CE 0F05                    syscall
+    81                                 %line 73+1 test.asm
+    82 000000D0 48C7C001000000          mov rax, 1
+    83                                 %line 73+0 test.asm
+    84 000000D7 48C7C701000000          mov rdi, 1
+    85 000000DE 48C7C6[00000000]        mov rsi, buffer
+    86 000000E5 48C7C203000000          mov rdx, 3
+    87 000000EC 0F05                    syscall
+    88                                 %line 74+1 test.asm
+    89 000000EE 48C7C001000000          mov rax, 1
+    90                                 %line 74+0 test.asm
+    91 000000F5 48C7C701000000          mov rdi, 1
+    92 000000FC 48C7C6[00000000]        mov rsi, msg3
+    93 00000103 48C7C203000000          mov rdx, 3
+    94 0000010A 0F05                    syscall
+    95                                 %line 75+1 test.asm
+    96 0000010C 48C7C001000000          mov rax, 1
+    97                                 %line 75+0 test.asm
+    98 00000113 48C7C701000000          mov rdi, 1
+    99 0000011A 48C7C6[00000000]        mov rsi, ascii
+   100 00000121 48C7C207000000          mov rdx, 7
+   101 00000128 0F05                    syscall
+   102                                 %line 76+1 test.asm
+   103                                 
+   104 0000012A 48C7C03C000000          mov rax, 60
+   105 00000131 48C7C700000000          mov rdi, 0
+   106 00000138 0F05                    syscall

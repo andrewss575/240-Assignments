@@ -1,0 +1,19 @@
+This folder has the following programs:
+
+PrintWoMacro - How to print onto the terminal WITHOUT Macro
+PrintWMacro - How to print onto the terminal WITH Macro
+ReadWMacro - How to read from the terminal WITH Macro
+
+I included these files because the professor is most likely to use 
+these macros in quizes/assignments/projects/. I believe he also uses
+macros to conver ascii to int
+
+I included the lst files when we are using macros here because it's 
+important to look at how macros work behind the scenes when the 
+assembly file is assembled. What is happening is that when we call a 
+mcaro in the asm file, that line essentially gets replaced with a 
+"copy-and-paste" of the macro itself but with the given arguments 
+instead of %1 and %2. THis is different from functions(which we will 
+learn later on), where functions don't copy and paste code, instead 
+they move the next line of instruction to the start of wherever the 
+function is defined

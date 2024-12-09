@@ -1,8 +1,9 @@
 ;this program creates a function that finds the average and sum of an array of quad-word numbers. This
 ;program is similar to avgfunc.asm but this time, we have registers that we want to save its value before changing
-;during the functions process 
+;during the functions process. AN example of this is needing to save rcx as a counter AFTER executing the function
+;we push and pop mutiple times so MAKE SURE you keep track of the the pushes so that when you pop, you know what your popping
 
-;stats(arr&, len, sum&, avg&)
+;stats(arr&, len, avg&, sum&)
 
 section .data
 	arr	dq	10, 20, 30, 40, 50, 60
@@ -30,8 +31,8 @@ arrLoop:
 	;the 4 arguments go in rdi, rsi, rdx, and rcx respectively
 	mov rdi, arr
 	mov rsi, qword[len]
-	mov rdx, sum
-	mov rcx, avg
+	mov rdx, avg
+	mov rcx, sum
 	call stats
 	
 	pop rcx
@@ -42,6 +43,7 @@ arrLoop:
 	mov rdi, 0
 	syscall
 	
+;**********FUNCTION******************
 global stats
 
 stats:
@@ -54,11 +56,16 @@ sumLoop:
 	cmp r10, rsi
 	jne sumLoop
 	
-	mov qword[rdx], rax
+	mov qword[rcx], rax
 	
+	push rdx			;pushing rdx because it was orginally the address for avg variable,
+				;so before we use it for division, i have to save its orignail value for later
 	mov rdx, 0
 	div rsi
-	mov qword[rcx], rax
+	
+	pop rdx			;after division, we no longer need rdx as remainder, so restore rdx to the address of avg variable
+	
+	mov qword[rdx], rax
 	
 	pop	rax	;epilogue - returns rax to its previous value by popping from stack before exiting functions
 	ret

@@ -1,0 +1,114 @@
+     1                                 %line 1+1 q2.asm
+     2                                 
+     3                                 
+     4                                 
+     5                                 
+     6                                 
+     7                                 
+     8                                 
+     9                                 
+    10                                 
+    11                                 
+    12                                 
+    13                                 
+    14                                 
+    15                                 
+    16                                 
+    17                                 
+    18                                 
+    19                                 
+    20                                 
+    21                                 
+    22                                 [section .data]
+    23 00000000 3CF47002D204D7F680-     shortArr dw -3012, 624, 1234, -2345, 3456, -90, 6321, -235, 12357, -7890
+    24 00000000 0DA6FFB11815FF4530-
+    25 00000000 2EE1               
+    26                                 
+    27                                 [section .bss]
+    28 00000000 <gap>                   posMul3 resw 10
+    29 00000014 <gap>                   negMul5 resw 10
+    30                                 
+    31                                 [section .text]
+    32                                 [global _start]
+    33                                 
+    34                                 _start:
+    35 00000000 48C7C300000000          mov rbx, 0
+    36 00000007 48C7C600000000          mov rsi, 0
+    37 0000000E 48C7C700000000          mov rdi, 0
+    38 00000015 48C7C10A000000          mov rcx, 10
+    39                                 
+    40                                 loop_label:
+    41                                 
+    42 0000001C 668B841B[00000000]      mov ax, word[shortArr + rbx * 2]
+    43                                 
+    44                                 
+    45 00000024 6683F800                cmp ax, 0
+    46 00000028 7C29                    jl negCheck
+    47                                 
+    48                                 
+    49                                 
+    50 0000002A 6641BB0300              mov r11w, 3
+    51 0000002F 6699                    cwd
+    52 00000031 6641F7FB                idiv r11w
+    53                                 
+    54                                 
+    55                                 
+    56 00000035 668B841B[00000000]      mov ax, word[shortArr + rbx * 2]
+    57                                 
+    58 0000003D 48FFC3                  inc rbx
+    59                                 
+    60 00000040 6683FA00                cmp dx, 0
+    61 00000044 7538                    jne else
+    62                                 
+    63                                 
+    64                                 
+    65 00000046 66898436[00000000]      mov word[posMul3 + rsi * 2], ax
+    66 0000004E 48FFC6                  inc rsi
+    67                                 
+    68 00000051 E2C7                    loop loop_label
+    69 00000053 EB2B                    jmp end
+    70                                 
+    71                                 negCheck:
+    72                                 
+    73                                 
+    74                                 
+    75 00000055 6641BB0500              mov r11w, 5
+    76 0000005A 6699                    cwd
+    77 0000005C 6641F7FB                idiv r11w
+    78                                 
+    79                                 
+    80                                 
+    81 00000060 668B841B[00000000]      mov ax, word[shortArr + rbx * 2]
+    82                                 
+    83 00000068 48FFC3                  inc rbx
+    84                                 
+    85 0000006B 6683FA00                cmp dx, 0
+    86 0000006F 750D                    jne else
+    87                                 
+    88                                 
+    89                                 
+    90 00000071 6689843F[00000000]      mov word[negMul5 + rdi * 2], ax
+    91 00000079 48FFC7                  inc rdi
+    92                                 
+    93 0000007C E29C                    loop loop_label
+    94 0000007E EB00                    jmp end
+    95                                 
+    96                                 
+    97                                 
+    98                                 else:
+    99 00000080 E298                    loop loop_label
+   100                                 
+   101                                 end:
+   102 00000082 48C7C000000000          mov rax, 0
+   103 00000089 48C7C700000000          mov rdi, 0
+   104 00000090 0F05                    syscall
+   105                                 
+   106                                 
+   107                                 
+   108                                 
+   109                                 
+   110                                 
+   111                                 
+   112                                 
+   113                                 
+   114                                 
